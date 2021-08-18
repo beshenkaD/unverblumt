@@ -4,6 +4,8 @@ import (
 	"flag"
 
 	"github.com/beshenkaD/unverblumt/bot"
+	"github.com/beshenkaD/unverblumt/hello"
+	"github.com/beshenkaD/unverblumt/me"
 )
 
 func main() {
@@ -15,5 +17,9 @@ func main() {
 	flag.Parse()
 
 	b := bot.New(*tokFlag, version, *debFlag)
+	b.RegisterCommand("/me", "just a me command for telegram", me.Me)
+
+	b.RegisterHook("greeter", "hello!!!", hello.Hello)
+
 	b.Run()
 }

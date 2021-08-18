@@ -1,13 +1,19 @@
 package bot
 
 import (
+	"errors"
 	"fmt"
 	"log"
+	"os"
 	"strings"
 	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	sh "github.com/mattn/go-shellwords"
+)
+
+var (
+	ErrNoArgs = errors.New("no arguments passed")
 )
 
 type Bot struct {
@@ -39,12 +45,18 @@ func New(token, version string, debug bool) *Bot {
 	}
 }
 
-type commandFunc func(*CommandInput) (*tgbotapi.Chattable, error)
+type commandFunc func(*CommandInput) (*Output, error)
+
+type Output struct {
+	Text      string
+	PhotoPath string
+}
 
 type CommandInput struct {
 	Command string
 	Args    []string
 	Msg     *tgbotapi.Message
+	Bot     *Bot
 }
 
 type Command struct {
@@ -53,10 +65,11 @@ type Command struct {
 	Func commandFunc
 }
 
-type hookFunc func(*HookInput) (*tgbotapi.Chattable, error)
+type hookFunc func(*HookInput) (*Output, error)
 
 type HookInput struct {
 	Msg *tgbotapi.Message
+	Bot *Bot
 }
 
 type Hook struct {
@@ -83,6 +96,8 @@ func (b *Bot) RegisterHook(name, desc string, f hookFunc) {
 
 func (b *Bot) sendText(msg string, chat int64) {
 	m := tgbotapi.NewMessage(chat, msg)
+	m.ParseMode = tgbotapi.ModeMarkdown
+
 	_, err := b.tg.Send(m)
 
 	if err != nil {
@@ -102,7 +117,7 @@ func (b *Bot) sendError(err error, chat int64) {
 	b.sendText("Error: "+err.Error(), chat)
 }
 
-func parse(m *tgbotapi.Message) (interface{}, error) {
+func (b *Bot) parse(m *tgbotapi.Message) (interface{}, error) {
 	if m.IsCommand() {
 		args, err := sh.Parse(m.Text)
 
@@ -114,23 +129,57 @@ func parse(m *tgbotapi.Message) (interface{}, error) {
 			Command: args[0],
 			Args:    args[1:],
 			Msg:     m,
+			Bot:     b,
 		}, nil
 	}
 
 	return &HookInput{
 		Msg: m,
+		Bot: b,
 	}, nil
+}
+
+func (b *Bot) handleOut(out *Output, chat int64) {
+	if out == nil {
+		return
+	}
+
+	if out.Text != "" {
+		b.sendText(out.Text, chat)
+	}
+	if out.PhotoPath != "" {
+		bytes, err := os.ReadFile(out.PhotoPath)
+		if err != nil {
+			log.Println(err.Error())
+			return
+		}
+
+		msg := tgbotapi.NewPhotoUpload(chat, bytes)
+		b.tg.Send(msg)
+	}
 }
 
 func (b *Bot) handleCommand(input *CommandInput) {
 	if command, ok := b.commands[input.Command]; ok {
-		go command.Func(input)
+		out, err := command.Func(input)
+		if err != nil {
+			b.sendError(err, input.Msg.Chat.ID)
+			return
+		}
+
+		b.handleOut(out, input.Msg.Chat.ID)
 	}
 }
 
 func (b *Bot) handleHook(input *HookInput) {
 	for _, hook := range b.hooks {
-		go hook.Func(input)
+		out, err := hook.Func(input)
+		if err != nil {
+			b.sendError(err, input.Msg.Chat.ID)
+			return
+		}
+
+		b.handleOut(out, input.Msg.Chat.ID)
 	}
 }
 
@@ -171,7 +220,7 @@ func (b *Bot) handleHelp(input *CommandInput) {
 func (b *Bot) messageReceived(msg *tgbotapi.Message) {
 	b.processed++
 
-	a, err := parse(msg)
+	a, err := b.parse(msg)
 
 	if err != nil {
 		b.sendError(err, msg.Chat.ID)
@@ -184,9 +233,9 @@ func (b *Bot) messageReceived(msg *tgbotapi.Message) {
 			return
 		}
 
-		b.handleCommand(a)
+		go b.handleCommand(a)
 	case *HookInput:
-		b.handleHook(a)
+		go b.handleHook(a)
 	}
 }
 
