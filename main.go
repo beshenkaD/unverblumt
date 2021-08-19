@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	version := "0.0.1"
+	version := "0.1.3"
 
 	tokFlag := flag.String("token", "", "telegram bot token")
 	debFlag := flag.Bool("debug", false, "use debug")
