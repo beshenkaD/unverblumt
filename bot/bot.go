@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"os"
 	"strings"
 	"time"
 
@@ -48,8 +47,8 @@ func New(token, version string, debug bool) *Bot {
 type commandFunc func(*CommandInput) (*Output, error)
 
 type Output struct {
-	Text      string
-	PhotoPath string
+	Text  string
+	Photo interface{}
 }
 
 type CommandInput struct {
@@ -147,15 +146,9 @@ func (b *Bot) handleOut(out *Output, chat int64) {
 	if out.Text != "" {
 		b.sendText(out.Text, chat)
 	}
-	if out.PhotoPath != "" {
-		bytes, err := os.ReadFile(out.PhotoPath)
-		if err != nil {
-			log.Println(err.Error())
-			return
-		}
-
-		msg := tgbotapi.NewPhotoUpload(chat, bytes)
-		b.tg.Send(msg)
+	if out.Photo != nil {
+		msg := tgbotapi.NewPhotoUpload(chat, out.Photo)
+		b.sendMessage(msg)
 	}
 }
 
