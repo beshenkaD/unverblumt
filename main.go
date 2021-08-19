@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	version := "0.2.5"
+	version := "0.2.6"
 
 	debFlag := flag.Bool("debug", false, "use debug")
 
