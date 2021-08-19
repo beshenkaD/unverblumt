@@ -60,10 +60,18 @@ type CommandInput struct {
 	Bot     *Bot
 }
 
+type CommandParam struct {
+	Name      string
+	Desc      string
+	Optional  bool
+	Subparams []CommandParam
+}
+
 type Command struct {
-	Name string
-	Desc string
-	Func commandFunc
+	Name   string
+	Desc   string
+	Params []CommandParam
+	Func   commandFunc
 }
 
 type hookFunc func(*HookInput) (*Output, error)
@@ -79,11 +87,12 @@ type Hook struct {
 	Func hookFunc
 }
 
-func (b *Bot) RegisterCommand(name, desc string, f commandFunc) {
+func (b *Bot) RegisterCommand(name, desc string, params []CommandParam, f commandFunc) {
 	b.commands[name] = Command{
-		Name: name,
-		Desc: desc,
-		Func: f,
+		Name:   name,
+		Desc:   desc,
+		Params: params,
+		Func:   f,
 	}
 }
 
@@ -184,7 +193,18 @@ func (b *Bot) handleHelp(input *CommandInput) {
 		for _, arg := range input.Args {
 			if command, ok := b.commands[arg]; ok {
 				found = true
-				t := fmt.Sprintf("%s: %s.", command.Name, command.Desc)
+				t := fmt.Sprintf("%s: %s.\n\n", command.Name, command.Desc)
+
+				if command.Params != nil {
+					t += "Available params:\n"
+					for _, param := range command.Params {
+						t = "\n" + t + fmt.Sprintf("%s\n    %s", param.Name, param.Desc)
+						for _, subparam := range param.Subparams {
+							t = "\n" + t + fmt.Sprintf("%s\n        %s", subparam.Name, subparam.Desc)
+						}
+						t += "\n"
+					}
+				}
 				b.sendText(t, input.Msg.Chat.ID)
 			}
 

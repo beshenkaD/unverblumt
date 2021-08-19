@@ -18,8 +18,20 @@ func main() {
 	flag.Parse()
 
 	b := bot.New(*tokFlag, version, *debFlag)
-	b.RegisterCommand("/me", "Displays a message about yourself", me.Me)
-	b.RegisterCommand("/quote", "Displays a message about yourself", quote.Quote)
+	b.RegisterCommand(
+		"/me",
+		"Displays a message about yourself",
+		nil,
+		me.Me)
+
+	b.RegisterCommand(
+		"/quote",
+		"Quotes a message",
+		[]bot.CommandParam{
+			{Name: "dark", Desc: "use black background", Optional: true},
+			{Name: "light", Desc: "use light background", Optional: true},
+		},
+		quote.Quote)
 
 	b.RegisterHook("greeter", "hello!!!", hello.Hello)
 
