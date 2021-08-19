@@ -187,13 +187,13 @@ func (b *Bot) handleHelp(input *CommandInput) {
 	if len(input.Args) > 0 {
 		for _, arg := range input.Args {
 			if command, ok := b.commands[arg]; ok {
-				t := fmt.Sprintf("-> %s: %s.", command.Name, command.Desc)
+				t := fmt.Sprintf("%s: %s.", command.Name, command.Desc)
 				b.sendText(t, input.Msg.Chat.ID)
 			}
 
 			for _, hook := range b.hooks {
 				if hook.Name == arg {
-					t := fmt.Sprintf("-> %s: %s.", hook.Name, hook.Desc)
+					t := fmt.Sprintf("%s: %s.", hook.Name, hook.Desc)
 					b.sendText(t, input.Msg.Chat.ID)
 					break
 				}
