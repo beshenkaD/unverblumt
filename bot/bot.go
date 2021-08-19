@@ -281,6 +281,10 @@ func (b *Bot) messageReceived(msg *tgbotapi.Message) {
 			b.handleStat(a)
 			return
 		}
+		if a.Command == "/start" {
+			b.handleHelp(a)
+			return
+		}
 
 		go b.handleCommand(a)
 	case *HookInput:
