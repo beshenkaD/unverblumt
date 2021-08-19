@@ -23,7 +23,7 @@ type Bot struct {
 	processed uint
 
 	debug    bool
-	tg       *tgbotapi.BotAPI
+	Tg       *tgbotapi.BotAPI
 	commands map[string]Command
 	hooks    []Hook
 }
@@ -40,7 +40,7 @@ func New(token, version string, debug bool) *Bot {
 		version:   version,
 		processed: 0,
 		debug:     debug,
-		tg:        bot,
+		Tg:        bot,
 		commands:  make(map[string]Command),
 		hooks:     []Hook{},
 	}
@@ -99,7 +99,7 @@ func (b *Bot) sendText(msg string, chat int64) {
 	m := tgbotapi.NewMessage(chat, msg)
 	m.ParseMode = tgbotapi.ModeMarkdown
 
-	_, err := b.tg.Send(m)
+	_, err := b.Tg.Send(m)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -107,7 +107,7 @@ func (b *Bot) sendText(msg string, chat int64) {
 }
 
 func (b *Bot) sendMessage(msg tgbotapi.Chattable) {
-	_, err := b.tg.Send(msg)
+	_, err := b.Tg.Send(msg)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -234,7 +234,7 @@ Memory usage:
     Sys: %v MB
     Heap (in use): %v MB
 `
-	t := fmt.Sprintf(f, b.tg.Self.UserName, b.version, time.Since(b.startTime), b.processed, toMB(m.Alloc), toMB(m.Sys), toMB(m.HeapInuse))
+	t := fmt.Sprintf(f, b.Tg.Self.UserName, b.version, time.Since(b.startTime), b.processed, toMB(m.Alloc), toMB(m.Sys), toMB(m.HeapInuse))
 	b.sendText(t, input.Msg.Chat.ID)
 }
 
@@ -267,12 +267,12 @@ func (b *Bot) messageReceived(msg *tgbotapi.Message) {
 func (b *Bot) Run() {
 	b.startTime = time.Now()
 
-	log.Printf("Authorized on account %s", b.tg.Self.UserName)
+	log.Printf("Authorized on account %s", b.Tg.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 
-	updates, err := b.tg.GetUpdatesChan(u)
+	updates, err := b.Tg.GetUpdatesChan(u)
 	if err != nil {
 		log.Println(err.Error())
 	}
