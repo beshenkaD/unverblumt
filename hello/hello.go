@@ -9,8 +9,8 @@ import (
 func Hello(in *bot.HookInput) (*bot.Output, error) {
 	if strings.Contains(in.Msg.Text, "hello") {
 		return &bot.Output{
-			Text:      "hello!",
-			PhotoPath: "",
+			Text:  "hello!",
+			Photo: nil,
 		}, nil
 	}
 

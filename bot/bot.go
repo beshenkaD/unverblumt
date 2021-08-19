@@ -12,7 +12,8 @@ import (
 )
 
 var (
-	ErrNoArgs = errors.New("no arguments passed")
+	ErrNoArgs    = errors.New("no arguments passed")
+	ErrWrongArgs = errors.New("wrong arguments passed")
 )
 
 type Bot struct {
@@ -29,7 +30,7 @@ type Bot struct {
 func New(token, version string, debug bool) *Bot {
 	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
-		log.Panic(err)
+		log.Fatal(err)
 	}
 
 	bot.Debug = debug
@@ -44,12 +45,12 @@ func New(token, version string, debug bool) *Bot {
 	}
 }
 
-type commandFunc func(*CommandInput) (*Output, error)
-
 type Output struct {
 	Text  string
 	Photo interface{}
 }
+
+type commandFunc func(*CommandInput) (*Output, error)
 
 type CommandInput struct {
 	Command string
@@ -178,14 +179,17 @@ func (b *Bot) handleHook(input *HookInput) {
 
 func (b *Bot) handleHelp(input *CommandInput) {
 	if len(input.Args) > 0 {
+		found := false
 		for _, arg := range input.Args {
 			if command, ok := b.commands[arg]; ok {
+				found = true
 				t := fmt.Sprintf("%s: %s.", command.Name, command.Desc)
 				b.sendText(t, input.Msg.Chat.ID)
 			}
 
 			for _, hook := range b.hooks {
 				if hook.Name == arg {
+					found = true
 					t := fmt.Sprintf("%s: %s.", hook.Name, hook.Desc)
 					b.sendText(t, input.Msg.Chat.ID)
 					break
@@ -193,6 +197,9 @@ func (b *Bot) handleHelp(input *CommandInput) {
 			}
 		}
 
+		if !found {
+			b.sendError(ErrWrongArgs, input.Msg.Chat.ID)
+		}
 		return
 	}
 
