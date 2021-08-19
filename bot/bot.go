@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"runtime"
 	"strings"
 	"time"
 
@@ -213,7 +214,27 @@ func (b *Bot) handleHelp(input *CommandInput) {
 		hooks = append(hooks, hook.Name)
 	}
 	t := fmt.Sprintf("type /help <command>|<hook> to get detailed description\n\nAvailable commands: %v\nActive hooks: %v", strings.Join(commands, ", "), strings.Join(hooks, ", "))
+	b.sendText(t, input.Msg.Chat.ID)
+}
 
+func (b *Bot) handleStat(input *CommandInput) {
+	toMB := func(b uint64) uint64 {
+		return b / 1024 / 1024
+	}
+
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+
+	f := `%s v%s
+
+Uptime: %s
+Messages processed: %d
+Memory usage: 
+    Alloc: %v MB
+    Sys: %v MB
+    Heap (in use): %v MB
+`
+	t := fmt.Sprintf(f, b.tg.Self.UserName, b.version, time.Since(b.startTime), b.processed, toMB(m.Alloc), toMB(m.Sys), toMB(m.HeapInuse))
 	b.sendText(t, input.Msg.Chat.ID)
 }
 
@@ -230,6 +251,10 @@ func (b *Bot) messageReceived(msg *tgbotapi.Message) {
 	case *CommandInput:
 		if a.Command == "/help" {
 			b.handleHelp(a)
+			return
+		}
+		if a.Command == "/stat" {
+			b.handleStat(a)
 			return
 		}
 
