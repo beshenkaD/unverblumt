@@ -97,7 +97,7 @@ func (b *Bot) RegisterHook(name, desc string, f hookFunc) {
 
 func (b *Bot) sendText(msg string, chat int64) {
 	m := tgbotapi.NewMessage(chat, msg)
-	m.ParseMode = tgbotapi.ModeMarkdown
+	m.ParseMode = tgbotapi.ModeHTML
 
 	_, err := b.Tg.Send(m)
 

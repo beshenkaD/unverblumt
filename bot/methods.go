@@ -5,7 +5,7 @@ import (
 )
 
 func (b *Bot) KickUser(user int, chat, until int64) error {
-	_, err := b.tg.KickChatMember(tgbotapi.KickChatMemberConfig{
+	_, err := b.Tg.KickChatMember(tgbotapi.KickChatMemberConfig{
 		UntilDate: until,
 		ChatMemberConfig: tgbotapi.ChatMemberConfig{
 			UserID: user,
@@ -17,7 +17,7 @@ func (b *Bot) KickUser(user int, chat, until int64) error {
 }
 
 func (b *Bot) DeleteMessage(chat int64, message int) error {
-	_, err := b.tg.DeleteMessage(tgbotapi.DeleteMessageConfig{
+	_, err := b.Tg.DeleteMessage(tgbotapi.DeleteMessageConfig{
 		ChatID:    chat,
 		MessageID: message,
 	})
@@ -26,7 +26,7 @@ func (b *Bot) DeleteMessage(chat int64, message int) error {
 }
 
 func (b *Bot) RestrictUser(chat, until int64, user int, messages, media, other, webpage bool) error {
-	_, err := b.tg.RestrictChatMember(tgbotapi.RestrictChatMemberConfig{
+	_, err := b.Tg.RestrictChatMember(tgbotapi.RestrictChatMemberConfig{
 		ChatMemberConfig: tgbotapi.ChatMemberConfig{
 			ChatID: chat,
 			UserID: user,

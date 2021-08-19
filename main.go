@@ -6,6 +6,7 @@ import (
 	"github.com/beshenkaD/unverblumt/bot"
 	"github.com/beshenkaD/unverblumt/hello"
 	"github.com/beshenkaD/unverblumt/me"
+	"github.com/beshenkaD/unverblumt/quote"
 )
 
 func main() {
@@ -18,6 +19,7 @@ func main() {
 
 	b := bot.New(*tokFlag, version, *debFlag)
 	b.RegisterCommand("/me", "Displays a message about yourself", me.Me)
+	b.RegisterCommand("/quote", "Displays a message about yourself", quote.Quote)
 
 	b.RegisterHook("greeter", "hello!!!", hello.Hello)
 
