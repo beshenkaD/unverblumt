@@ -54,14 +54,5 @@ func main() {
 			{Name: "<lang>", Desc: "language code. Default value is: \"en\"", Optional: true},
 		},
 		openweathermap.Weather)
-
-	b.RegisterCommand(
-		"/forecast",
-		"Get forecast for 5 days",
-		[]bot.CommandParam{
-			{Name: "<city>", Desc: "get weather for <city>. Default value is: \"Moscow\"", Optional: true},
-			{Name: "<lang>", Desc: "language code. Default value is: \"en\"", Optional: true},
-		},
-		openweathermap.Forecast)
 	b.Run()
 }
