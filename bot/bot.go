@@ -47,8 +47,9 @@ func New(token, version string, debug bool) *Bot {
 }
 
 type Output struct {
-	Text  string
-	Photo interface{}
+	Text    string
+	UseHTML bool
+	Photo   interface{}
 }
 
 type commandFunc func(*CommandInput) (*Output, error)
@@ -104,9 +105,12 @@ func (b *Bot) RegisterHook(name, desc string, f hookFunc) {
 	})
 }
 
-func (b *Bot) sendText(msg string, chat int64) {
+func (b *Bot) sendText(msg string, useHTML bool, chat int64) {
 	m := tgbotapi.NewMessage(chat, msg)
-	m.ParseMode = tgbotapi.ModeHTML
+
+	if useHTML {
+		m.ParseMode = tgbotapi.ModeHTML
+	}
 
 	_, err := b.Tg.Send(m)
 
@@ -124,7 +128,7 @@ func (b *Bot) sendMessage(msg tgbotapi.Chattable) {
 }
 
 func (b *Bot) sendError(err error, chat int64) {
-	b.sendText("Error: "+err.Error(), chat)
+	b.sendText("Error: "+err.Error(), false, chat)
 }
 
 func (b *Bot) parse(m *tgbotapi.Message) (interface{}, error) {
@@ -155,7 +159,7 @@ func (b *Bot) handleOut(out *Output, chat int64) {
 	}
 
 	if out.Text != "" {
-		b.sendText(out.Text, chat)
+		b.sendText(out.Text, out.UseHTML, chat)
 	}
 	if out.Photo != nil {
 		msg := tgbotapi.NewPhotoUpload(chat, out.Photo)
@@ -205,14 +209,14 @@ func (b *Bot) handleHelp(input *CommandInput) {
 						t += "\n"
 					}
 				}
-				b.sendText(t, input.Msg.Chat.ID)
+				b.sendText(t, false, input.Msg.Chat.ID)
 			}
 
 			for _, hook := range b.hooks {
 				if hook.Name == arg {
 					found = true
 					t := fmt.Sprintf("%s: %s.", hook.Name, hook.Desc)
-					b.sendText(t, input.Msg.Chat.ID)
+					b.sendText(t, false, input.Msg.Chat.ID)
 					break
 				}
 			}
@@ -234,7 +238,7 @@ func (b *Bot) handleHelp(input *CommandInput) {
 		hooks = append(hooks, hook.Name)
 	}
 	t := fmt.Sprintf("type /help <command>|<hook> to get detailed description\n\nAvailable commands: %v\nActive hooks: %v", strings.Join(commands, ", "), strings.Join(hooks, ", "))
-	b.sendText(t, input.Msg.Chat.ID)
+	b.sendText(t, false, input.Msg.Chat.ID)
 }
 
 func (b *Bot) handleStat(input *CommandInput) {
@@ -255,7 +259,7 @@ Memory usage:
     Heap (in use): %v MB
 `
 	t := fmt.Sprintf(f, b.Tg.Self.UserName, b.version, time.Since(b.startTime), b.processed, toMB(m.Alloc), toMB(m.Sys), toMB(m.HeapInuse))
-	b.sendText(t, input.Msg.Chat.ID)
+	b.sendText(t, false, input.Msg.Chat.ID)
 }
 
 func (b *Bot) messageReceived(msg *tgbotapi.Message) {

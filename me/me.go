@@ -23,7 +23,8 @@ func Me(in *bot.CommandInput) (*bot.Output, error) {
 	in.Bot.DeleteMessage(in.Msg.Chat.ID, in.Msg.MessageID)
 
 	return &bot.Output{
-		Text:  t,
-		Photo: nil,
+		Text:    t,
+		UseHTML: true,
+		Photo:   nil,
 	}, nil
 }
