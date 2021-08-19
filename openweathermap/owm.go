@@ -53,8 +53,9 @@ func Weather(in *bot.CommandInput) (*bot.Output, error) {
 	tmpl.Execute(buf, w)
 
 	return &bot.Output{
-		Text:  buf.String(),
-		Photo: nil,
+		Text:    buf.String(),
+		UseHTML: true,
+		Photo:   nil,
 	}, nil
 }
 
@@ -96,7 +97,8 @@ func Forecast(in *bot.CommandInput) (*bot.Output, error) {
 	tmpl.Execute(buf, forecast)
 
 	return &bot.Output{
-		Text:  buf.String(),
-		Photo: nil,
+		Text:    buf.String(),
+		UseHTML: true,
+		Photo:   nil,
 	}, nil
 }
