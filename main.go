@@ -4,8 +4,8 @@ import (
 	"flag"
 
 	"github.com/beshenkaD/unverblumt/bot"
-	"github.com/beshenkaD/unverblumt/hello"
 	"github.com/beshenkaD/unverblumt/me"
+	"github.com/beshenkaD/unverblumt/openweathermap"
 	"github.com/beshenkaD/unverblumt/quote"
 )
 
@@ -33,7 +33,16 @@ func main() {
 		},
 		quote.Quote)
 
-	b.RegisterHook("greeter", "hello!!!", hello.Hello)
+	b.RegisterCommand(
+		"/weather",
+		"Get current weather",
+		nil,
+		openweathermap.Weather)
 
+	b.RegisterCommand(
+		"/forecast",
+		"Get forecast for 5 days",
+		nil,
+		openweathermap.Forecast)
 	b.Run()
 }

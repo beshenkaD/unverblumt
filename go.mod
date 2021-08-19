@@ -3,6 +3,7 @@ module github.com/beshenkaD/unverblumt
 go 1.16
 
 require (
+	github.com/briandowns/openweathermap v0.16.0
 	github.com/cavaliercoder/grab v2.0.0+incompatible
 	github.com/fogleman/gg v1.3.0
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
