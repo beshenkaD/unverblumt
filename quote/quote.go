@@ -225,6 +225,10 @@ func Quote(in *bot.CommandInput) (*bot.Output, error) {
 			photo, _ = gg.LoadImage(resp.Filename)
 			photo = resize.Resize(200, 200, photo, resize.Bilinear)
 			os.Remove(resp.Filename)
+		} else {
+			ct := gg.NewContext(200, 200)
+
+			photo = ct.Image()
 		}
 	} else {
 		return nil, errors.New("error")
