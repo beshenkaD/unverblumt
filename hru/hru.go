@@ -44,6 +44,8 @@ func getHru() string {
 			actions = append(actions, "опять"+" "+a)
 		}
 
+		actions = append(actions, []string{"харош хрюкать", "угаманись"}...)
+
 		return actions[rand.Intn(len(actions))]
 	}
 
