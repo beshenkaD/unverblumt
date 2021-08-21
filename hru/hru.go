@@ -1,6 +1,9 @@
 package hru
 
 import (
+	cryptoRand "crypto/rand"
+	"encoding/binary"
+	"log"
 	"math/rand"
 	"regexp"
 	"strings"
@@ -10,7 +13,13 @@ import (
 )
 
 func init() {
-	rand.Seed(time.Now().UnixNano())
+	var b [8]byte
+	_, err := cryptoRand.Read(b[:])
+	if err != nil {
+		log.Println("cannot seed math/rand package with cryptographically secure random number generator")
+		rand.Seed(time.Now().UnixNano())
+	}
+	rand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 }
 
 func getHru() string {
