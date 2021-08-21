@@ -25,6 +25,7 @@ func getHru() string {
 		"Не перди, свинка)",
 		"Хряк расхрюкался)",
 		"Боров похрюкивает)",
+		"Угаманись, свинка)",
 	}
 
 	for i, v := range list {
@@ -44,7 +45,7 @@ func HruCommand(in *bot.CommandInput) (*bot.Output, error) {
 }
 
 func HruWatcher(in *bot.HookInput) (*bot.Output, error) {
-	validHru := regexp.MustCompile(`х+р+ю+`)
+	validHru := regexp.MustCompile(`(х+р+ю+)|(h+r+u+)`)
 
 	if validHru.MatchString(strings.ToLower(in.Msg.Text)) {
 		return &bot.Output{
