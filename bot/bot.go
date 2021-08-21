@@ -137,13 +137,13 @@ func (b *Bot) parse(m *tgbotapi.Message) (interface{}, error) {
 	if m.IsCommand() {
 		args, err := sh.Parse(m.Text)
 
+		if err != nil {
+			return nil, err
+		}
+
 		p := "@" + b.Tg.Self.UserName
 		if strings.Contains(args[0], p) {
 			args[0] = args[0][0 : len(args[0])-len(p)]
-		}
-
-		if err != nil {
-			return nil, err
 		}
 
 		return &CommandInput{
