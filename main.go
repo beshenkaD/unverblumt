@@ -90,7 +90,7 @@ func main() {
 		shortener.Short)
 
 	b.RegisterCommand(
-		"/shortBunch",
+		"/short_bunch",
 		"Shorts multiple URLs",
 		[]bot.CommandParam{
 			{Name: "string", Desc: "this command use \"<target>:<ixpireIn>:<password>\" format.\nIf you want to ignore param just do it. Example (ignore expireIn):\n/shortBunch \"example.com::password\"", Optional: false},
