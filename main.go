@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	version := "0.2.6"
+	version := "0.3.0"
 
 	debFlag := flag.Bool("debug", false, "use debug")
 	comFlag := flag.Bool("commands", false, "print commands for BotFather")
