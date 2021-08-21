@@ -45,7 +45,7 @@ func HruCommand(in *bot.CommandInput) (*bot.Output, error) {
 }
 
 func HruWatcher(in *bot.HookInput) (*bot.Output, error) {
-	validHru := regexp.MustCompile(`(х+р+ю+)|(h+r+u+)`)
+	validHru := regexp.MustCompile(`.*(х+р+ю+|h+r+u+)+.*`)
 
 	if validHru.MatchString(strings.ToLower(in.Msg.Text)) {
 		return &bot.Output{
