@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/beshenkaD/unverblumt/bot"
+	"github.com/beshenkaD/unverblumt/hru"
 	"github.com/beshenkaD/unverblumt/me"
 	"github.com/beshenkaD/unverblumt/openweathermap"
 	"github.com/beshenkaD/unverblumt/ping"
@@ -16,6 +17,7 @@ func main() {
 	version := "0.2.6"
 
 	debFlag := flag.Bool("debug", false, "use debug")
+	comFlag := flag.Bool("commands", false, "print commands for BotFather")
 
 	flag.Parse()
 
@@ -54,5 +56,22 @@ func main() {
 			{Name: "<lang>", Desc: "language code. Default value is: \"en\"", Optional: true},
 		},
 		openweathermap.Weather)
+
+	b.RegisterCommand(
+		"/hru",
+		"Pig fun funny pig ahaahhah hruhruhru",
+		nil,
+		hru.HruCommand)
+
+	b.RegisterHook(
+		"hru",
+		"Detects hru and do fun stuff ahhaha hruhru",
+		hru.HruWatcher)
+
+	if *comFlag {
+		b.PrintCommands()
+		return
+	}
+
 	b.Run()
 }

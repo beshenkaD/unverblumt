@@ -313,3 +313,11 @@ func (b *Bot) Run() {
 		b.messageReceived(update.Message)
 	}
 }
+
+func (b *Bot) PrintCommands() {
+	fmt.Println("Pass this strings to BotFather")
+	fmt.Println("")
+	for name, command := range b.commands {
+		fmt.Printf("%s - %s\n", name[1:], command.Desc)
+	}
+}
