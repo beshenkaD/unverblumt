@@ -44,14 +44,13 @@ func main() {
 		"/quote",
 		"Quotes a message",
 		[]bot.CommandParam{
-			{Name: "dark", Desc: "use black background", Optional: true},
-			{Name: "light", Desc: "use light background", Optional: true},
+			{Name: "dark | light", Desc: "background color", Optional: true},
 		},
 		quote.Quote)
 
 	b.RegisterCommand(
 		"/weather",
-		"Get current weather",
+		"Displays current weather",
 		[]bot.CommandParam{
 			{Name: "<city>", Desc: "get weather for <city>. Default value is: \"Moscow\"", Optional: true},
 			{Name: "<lang>", Desc: "language code. Default value is: \"en\"", Optional: true},
@@ -60,7 +59,7 @@ func main() {
 
 	b.RegisterCommand(
 		"/forecast",
-		"Get forecast for 5 days",
+		"Displays forecast",
 		[]bot.CommandParam{
 			{Name: "<city>", Desc: "get weather for <city>. Default value is: \"Moscow\"", Optional: true},
 			{Name: "<lang>", Desc: "language code. Default value is: \"en\"", Optional: true},
@@ -75,7 +74,7 @@ func main() {
 
 	b.RegisterCommand(
 		"/cat",
-		"Random cat image",
+		"Sends random cat image. How cute!",
 		nil,
 		cat.Cat)
 
