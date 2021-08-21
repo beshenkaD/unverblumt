@@ -36,8 +36,14 @@ func getHru() string {
 	}
 
 	action := func() string {
-		actions := []string{"хрюкнул", "пукнул", "громко прохрюкал", "опять похрюкивает", "чавкает", "подхрюкивает", "подпукивает"}
+		actions := []string{"хрюкнул", "пукнул", "громко прохрюкал", "чавкает", "подхрюкивает", "подпукивает"}
 		actions = append(actions, []string{"издает звуки хрюканья", "протестует", "срет"}...)
+
+		for _, a := range actions {
+			actions = append(actions, "снова"+" "+a)
+			actions = append(actions, "опять"+" "+a)
+		}
+
 		return actions[rand.Intn(len(actions))]
 	}
 
