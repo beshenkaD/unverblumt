@@ -11,5 +11,6 @@ require (
 	github.com/mattn/go-shellwords v1.0.12
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
+	github.com/zsefvlol/timezonemapper v1.0.0
 	golang.org/x/image v0.0.0-20210628002857-a66eb6448b8d
 )
