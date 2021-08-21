@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/beshenkaD/unverblumt/bestlang"
 	"github.com/beshenkaD/unverblumt/bot"
 	"github.com/beshenkaD/unverblumt/cat"
 	"github.com/beshenkaD/unverblumt/hru"
@@ -82,6 +83,11 @@ func main() {
 		"hru",
 		"Detects hru and do fun stuff ahhaha hruhru",
 		hru.HruWatcher)
+
+	b.RegisterHook(
+		"best language",
+		"The final solution to the dispute about what programming language is the best",
+		bestlang.BestLangWatcher)
 
 	if *comFlag {
 		b.PrintCommands()
