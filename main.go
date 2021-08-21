@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/beshenkaD/unverblumt/bot"
+	"github.com/beshenkaD/unverblumt/cat"
 	"github.com/beshenkaD/unverblumt/hru"
 	"github.com/beshenkaD/unverblumt/me"
 	"github.com/beshenkaD/unverblumt/openweathermap"
@@ -71,6 +72,12 @@ func main() {
 		"Pig fun funny pig ahaahhah hruhruhru",
 		nil,
 		hru.HruCommand)
+
+	b.RegisterCommand(
+		"/cat",
+		"Random cat image",
+		nil,
+		cat.Cat)
 
 	b.RegisterHook(
 		"hru",

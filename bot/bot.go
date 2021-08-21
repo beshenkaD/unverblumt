@@ -47,9 +47,10 @@ func New(token, version string, debug bool) *Bot {
 }
 
 type Output struct {
-	Text    string
-	UseHTML bool
-	Photo   interface{}
+	Text     string
+	UseHTML  bool
+	Photo    interface{}
+	PhotoURL string
 }
 
 type commandFunc func(*CommandInput) (*Output, error)
@@ -166,6 +167,12 @@ func (b *Bot) handleOut(out *Output, chat int64) {
 
 	if out.Text != "" {
 		b.sendText(out.Text, out.UseHTML, false, chat)
+	}
+	if out.PhotoURL != "" {
+		msg := tgbotapi.NewPhotoUpload(chat, nil)
+		msg.FileID = out.PhotoURL
+		msg.UseExisting = true
+		b.sendMessage(msg)
 	}
 	if out.Photo != nil {
 		msg := tgbotapi.NewPhotoUpload(chat, out.Photo)
