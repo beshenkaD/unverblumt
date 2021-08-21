@@ -69,20 +69,20 @@ func getIcon(code string) string {
 }
 
 const weatherTemplate = `Current weather for <b>{{.Name}}</b>:<code>
-    Conditions: {{range .Weather}}</code><b>{{.Description}}</b><code> {{getIcon .Icon}} {{end}}
-    Temperature:
-	    - Now:         {{.Main.Temp}} °C
-	    - Feels like:  {{.Main.FeelsLike}} °C
-    Humidity:    {{.Main.Humidity}}%
-    Wind speed:  {{.Wind.Speed}} m/s
-    Cloudiness:  {{.Clouds.All}}%
+  Conditions: {{range .Weather}}</code><b>{{.Description}}</b><code> {{getIcon .Icon}} {{end}}
+  Temperature:
+    - Now:         {{.Main.Temp}} °C
+    - Feels like:  {{.Main.FeelsLike}} °C
+  Humidity:    {{.Main.Humidity}}%
+  Wind speed:  {{.Wind.Speed}} m/s
+  Cloudiness:  {{.Clouds.All}}%
 </code>
 `
 const forecastTemplate = `Weather Forecast for <b>{{.City.Name}}</b>:<code>
 {{range .List}} </code><u>{{formatDate .Dt}}</u><code>:
-    - Conditions:  {{range .Weather}}</code><b>{{.Description}}</b><code> {{getIcon .Icon}} {{end}}
-    - Temp:        {{.Main.Temp}} °C
-    - Feels like:  {{.Main.FeelsLike}} °C
+  - Conditions:  {{range .Weather}}</code><b>{{.Description}}</b><code>{{getIcon .Icon}}{{end}}
+  - Temp:        {{.Main.Temp}} °C
+  - Feels like:  {{.Main.FeelsLike}} °C
 
 {{end}}
 </code>
