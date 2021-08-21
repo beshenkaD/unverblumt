@@ -13,4 +13,5 @@ require (
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/zsefvlol/timezonemapper v1.0.0
 	golang.org/x/image v0.0.0-20210628002857-a66eb6448b8d
+	mvdan.cc/xurls/v2 v2.3.0
 )

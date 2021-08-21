@@ -12,6 +12,7 @@ import (
 	"github.com/beshenkaD/unverblumt/openweathermap"
 	"github.com/beshenkaD/unverblumt/ping"
 	"github.com/beshenkaD/unverblumt/quote"
+	"github.com/beshenkaD/unverblumt/shortener"
 )
 
 func main() {
@@ -77,6 +78,24 @@ func main() {
 		"Sends random cat image. How cute!",
 		nil,
 		cat.Cat)
+
+	b.RegisterCommand(
+		"/short",
+		"Shorts given URL",
+		[]bot.CommandParam{
+			{Name: "<target>", Desc: "URL which will be shortened", Optional: false},
+			{Name: "<Expire in>", Desc: "After this time, the link will stop working. Format: 2[m|h|d] (minutes, hours, days)", Optional: true},
+			{Name: "<Password>", Desc: "Guess what it is", Optional: true},
+		},
+		shortener.Short)
+
+	b.RegisterCommand(
+		"/shortBunch",
+		"Shorts multiple URLs",
+		[]bot.CommandParam{
+			{Name: "string", Desc: "this command use \"<target>:<ixpireIn>:<password>\" format.\nIf you want to ignore param just do it. Example (ignore expireIn):\n/shortBunch \"example.com::password\"", Optional: false},
+		},
+		shortener.ShortBunch)
 
 	b.RegisterHook(
 		"hru",
