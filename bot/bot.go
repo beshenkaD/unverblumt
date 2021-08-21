@@ -325,4 +325,8 @@ func (b *Bot) PrintCommands() {
 	for name, command := range b.commands {
 		fmt.Printf("%s - %s\n", name[1:], command.Desc)
 	}
+
+	fmt.Println("start - start")
+	fmt.Println("help - displays help")
+	fmt.Println("stat - displays bot statistics")
 }
