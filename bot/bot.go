@@ -105,8 +105,9 @@ func (b *Bot) RegisterHook(name, desc string, f hookFunc) {
 	})
 }
 
-func (b *Bot) sendText(msg string, useHTML bool, chat int64) {
+func (b *Bot) sendText(msg string, useHTML bool, disablePreview bool, chat int64) {
 	m := tgbotapi.NewMessage(chat, msg)
+	m.DisableWebPagePreview = disablePreview
 
 	if useHTML {
 		m.ParseMode = tgbotapi.ModeHTML
@@ -128,7 +129,7 @@ func (b *Bot) sendMessage(msg tgbotapi.Chattable) {
 }
 
 func (b *Bot) sendError(err error, chat int64) {
-	b.sendText("Error: "+err.Error(), false, chat)
+	b.sendText("Error: "+err.Error(), false, true, chat)
 }
 
 func (b *Bot) parse(m *tgbotapi.Message) (interface{}, error) {
@@ -164,7 +165,7 @@ func (b *Bot) handleOut(out *Output, chat int64) {
 	}
 
 	if out.Text != "" {
-		b.sendText(out.Text, out.UseHTML, chat)
+		b.sendText(out.Text, out.UseHTML, false, chat)
 	}
 	if out.Photo != nil {
 		msg := tgbotapi.NewPhotoUpload(chat, out.Photo)
@@ -214,14 +215,14 @@ func (b *Bot) handleHelp(input *CommandInput) {
 						t += "\n"
 					}
 				}
-				b.sendText(t, false, input.Msg.Chat.ID)
+				b.sendText(t, false, true, input.Msg.Chat.ID)
 			}
 
 			for _, hook := range b.hooks {
 				if hook.Name == arg {
 					found = true
 					t := fmt.Sprintf("%s: %s.", hook.Name, hook.Desc)
-					b.sendText(t, false, input.Msg.Chat.ID)
+					b.sendText(t, false, true, input.Msg.Chat.ID)
 					break
 				}
 			}
@@ -243,7 +244,7 @@ func (b *Bot) handleHelp(input *CommandInput) {
 		hooks = append(hooks, hook.Name)
 	}
 	t := fmt.Sprintf("type /help <command>|<hook> to get detailed description\n\nAvailable commands: %v\nActive hooks: %v", strings.Join(commands, ", "), strings.Join(hooks, ", "))
-	b.sendText(t, false, input.Msg.Chat.ID)
+	b.sendText(t, false, true, input.Msg.Chat.ID)
 }
 
 func (b *Bot) handleStat(input *CommandInput) {
@@ -264,7 +265,30 @@ Memory usage:
     Heap (in use): %v MB
 `
 	t := fmt.Sprintf(f, b.Tg.Self.UserName, b.version, time.Since(b.startTime), b.processed, toMB(m.Alloc), toMB(m.Sys), toMB(m.HeapInuse))
-	b.sendText(t, false, input.Msg.Chat.ID)
+	b.sendText(t, false, true, input.Msg.Chat.ID)
+}
+
+func (b *Bot) handleStart(input *CommandInput) {
+	start := `Welcome to <b>%s v%s</b>!
+
+This bot has a very simple and limited structure. It supports only <b><i>commands</i></b> and <b><i>hooks</i></b>. 
+Commands are called using the prefix. Example:
+    <code>/ping</code>
+or using the prefix with the name of the bot:
+    <code>/ping@%s</code>
+Hooks work automatically if bot has access to messages.
+
+Commands can be called with arguments. For example: 
+    <code>/weather Moscow</code> 
+If the argument contains several words, then use quotes:
+    <code>/weather "Saint Petersburg"</code>
+
+Source code is available here: github.com/beshenkaD/unverblumt
+
+Use <b>/help</b> for more information. 
+`
+	start = fmt.Sprintf(start, b.Tg.Self.UserName, b.version, b.Tg.Self.UserName)
+	b.sendText(start, true, true, input.Msg.Chat.ID)
 }
 
 func (b *Bot) messageReceived(msg *tgbotapi.Message) {
@@ -287,7 +311,7 @@ func (b *Bot) messageReceived(msg *tgbotapi.Message) {
 			return
 		}
 		if a.Command == "/start" {
-			b.handleHelp(a)
+			b.handleStart(a)
 			return
 		}
 
