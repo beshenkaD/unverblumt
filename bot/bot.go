@@ -1,11 +1,13 @@
 package bot
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"log"
 	"runtime"
 	"strings"
+	"text/template"
 	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -204,6 +206,74 @@ func (b *Bot) handleHook(input *HookInput) {
 	}
 }
 
+const commandsTemplate = `{{range .Commands}}{{.Name}}: {{.Desc}}. 
+
+Options: {{range .Params}}
+  - {{.Name}} {{optional .Optional}}
+        {{.Desc}} {{range .Subparams}}
+          - {{.Name}}: {{.Desc}} {{optional .Optional}} {{end}} 
+  {{end}} 
+{{end}}
+`
+
+const hooksTemplate = `{{range .Hooks}}{{.Name}}: {{.Desc}}
+{{end}}`
+
+func (b *Bot) handleHelpV2(input *CommandInput) {
+	if len(input.Args) > 0 {
+		commands := []Command{}
+		hooks := []Hook{}
+
+		for _, arg := range input.Args {
+			if command, ok := b.commands[arg]; ok && arg[0] == '/' {
+				commands = append(commands, command)
+			} else {
+				for _, hook := range b.hooks {
+					if hook.Name == arg {
+						hooks = append(hooks, hook)
+					}
+				}
+			}
+		}
+
+		if len(commands) != 0 {
+			buf := new(bytes.Buffer)
+			tmpl, _ := template.New("commands").Funcs(template.FuncMap{
+				"optional": func(o bool) string {
+					if o {
+						return ""
+					}
+					return "[Required]"
+				},
+			}).Parse(commandsTemplate)
+
+			tmpl.Execute(buf, struct{ Commands []Command }{commands})
+
+			b.sendText(buf.String(), false, true, input.Msg.Chat.ID)
+		}
+		if len(hooks) != 0 {
+			buf := new(bytes.Buffer)
+			tmpl, _ := template.New("hooks").Parse(hooksTemplate)
+
+			tmpl.Execute(buf, struct{ Hooks []Hook }{hooks})
+
+			b.sendText(buf.String(), false, true, input.Msg.Chat.ID)
+		}
+	} else {
+		commands := []string{}
+		for name := range b.commands {
+			commands = append(commands, name)
+		}
+
+		hooks := []string{}
+		for _, hook := range b.hooks {
+			hooks = append(hooks, hook.Name)
+		}
+		t := fmt.Sprintf("type /help <command>|<hook> to get detailed description\n\nAvailable commands: %v\nActive hooks: %v", strings.Join(commands, ", "), strings.Join(hooks, ", "))
+		b.sendText(t, false, true, input.Msg.Chat.ID)
+	}
+}
+
 func (b *Bot) handleHelp(input *CommandInput) {
 	if len(input.Args) > 0 {
 		found := false
@@ -310,7 +380,7 @@ func (b *Bot) messageReceived(msg *tgbotapi.Message) {
 	switch a := a.(type) {
 	case *CommandInput:
 		if a.Command == "/help" {
-			b.handleHelp(a)
+			b.handleHelpV2(a)
 			return
 		}
 		if a.Command == "/stat" {
