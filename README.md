@@ -10,13 +10,13 @@ go build
 
 This command will build the bot itself
 
-**2. Building modules**
+**2. Building modules**  
 To build needed modules use:
 ``` shell script
 go build -buildtype=plugin modules/{anything you want}/*.go
 ```
 
-**3. Configuring**
+**3. Configuring**  
 To configure bot export some environment variables:
 ``` shell script
 export UNVERBLUMT_TELEGRAM="Your token"
