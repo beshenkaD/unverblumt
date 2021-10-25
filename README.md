@@ -13,7 +13,7 @@ This command will build the bot itself
 **2. Building modules**  
 To build needed modules use:
 ``` shell script
-go build -buildtype=plugin modules/{anything you want}/*.go
+go build -buildmode=plugin modules/{anything you want}/*.go
 ```
 
 **3. Configuring**  
