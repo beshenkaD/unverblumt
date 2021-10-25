@@ -26,7 +26,18 @@ export UNVERBLUMT_MODULES="Space-separated paths to modules"
 Or write it to `.env` file
 
 ### Docker
-**TODO**
+**1. Build image**
+``` shell script
+docker build . --tag u
+```
+
+**2. Run it :)**
+``` shell script
+docker run \
+    -e UNVERBLUMT_TELEGRAM="Your token" \
+    -e UNVERBLUMT_MODULES="Space-separated paths to modules" \
+    u
+```
 
 ## How to write modules?
 **1. Import some packages**
