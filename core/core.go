@@ -41,16 +41,33 @@ type Module struct {
 type Unverblumt struct {
 	Bot *tb.Bot
 
-	Modules map[string]*Module
+	modules map[string]*Module
+}
+
+/*
+   Returns copy of all registered modules
+   This should be useful for various info commands,
+   and mainly for the 'help' command
+*/
+func (u *Unverblumt) GetModules() map[string]Module {
+	r := make(map[string]Module)
+
+	for n, m := range u.modules {
+		r[n] = *m
+	}
+
+	return r
 }
 
 /*
    Adds a module with the given name to the bot.
+
+   maybe restrict registering modules at runtime?
 */
 func (u *Unverblumt) RegisterModule(m *Module) {
 	name := m.Name
 
-	u.Modules[name] = m
+	u.modules[name] = m
 
 	for k, v := range m.ActiveCommands {
 		u.Bot.Handle(k, v.Handler)
@@ -69,7 +86,7 @@ func (u *Unverblumt) RegisterModule(m *Module) {
 */
 func (u *Unverblumt) setHandler(event string) {
 	u.Bot.Handle(event, func(ctx tb.Context) error {
-		for _, m := range u.Modules {
+		for _, m := range u.modules {
 			for _, c := range m.PassiveCommands[event] {
 				c.Handler(ctx)
 			}
@@ -116,16 +133,18 @@ func New(token string, parseMode string, verbose bool) (*Unverblumt, error) {
 
 	u := &Unverblumt{
 		Bot:     bot,
-		Modules: make(map[string]*Module),
+		modules: make(map[string]*Module),
 	}
 
-	u.registerBase()
+	for _, module := range m {
+		u.RegisterModule(module)
+	}
 
 	return u, nil
 }
 
 func (u *Unverblumt) Start() {
-	u.generateHelpData()
+	log.Info.Println("Bot has been started with the name: " + u.Bot.Me.FirstName)
 
 	u.Bot.Start()
 }
