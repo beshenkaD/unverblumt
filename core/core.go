@@ -119,13 +119,8 @@ func (u *Unverblumt) LoadModule(path string) (*Module, error) {
 /*
    Creates new bot instance.
 */
-func New(token string, parseMode string, verbose bool) (*Unverblumt, error) {
-	bot, err := tb.NewBot(tb.Settings{
-		Token:     token,
-		Poller:    &tb.LongPoller{Timeout: 60 * time.Second},
-		Verbose:   verbose,
-		ParseMode: parseMode,
-	})
+func New(s tb.Settings, m ...*Module) (*Unverblumt, error) {
+	bot, err := tb.NewBot(s)
 
 	if err != nil {
 		return nil, err
