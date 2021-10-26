@@ -4,16 +4,15 @@
 package core
 
 import (
-	"log"
 	"plugin"
-	"time"
+
+	"github.com/beshenkaD/unverblumt/internal/log"
 
 	tb "gopkg.in/tucnak/telebot.v3"
 )
 
 /*
    Represents any command that can be passed to bot
-   Description and Arguments used in help generator
 */
 type Command struct {
 	Handler     tb.HandlerFunc
@@ -62,7 +61,7 @@ func (u *Unverblumt) RegisterModule(m *Module) {
 		u.setHandler(k)
 	}
 
-	log.Printf("Module `%s` has been registered", name)
+	log.Info.Printf("Module `%s` has been registered", name)
 }
 
 /*
