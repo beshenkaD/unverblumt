@@ -1,18 +1,20 @@
 // Copyright (C) 2021 beshenkaD
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-package core
+package bot
 
 import (
 	"fmt"
 	"strings"
 
+	"github.com/beshenkaD/unverblumt/core"
 	"github.com/google/uuid"
 	tb "gopkg.in/tucnak/telebot.v3"
 )
 
 /*
    I think this should be refactored. This code looks like shit
+
    Separate help generator from base?
    Create all data at startup then use it without bothering main object?
    Use FSM for buttons?
@@ -41,7 +43,7 @@ var (
 /*
    Returns pretty-printed information about module
 */
-func getModuleInfo(m *Module) string {
+func getModuleInfo(m core.Module) string {
 	const s = `<b>%s</b> module
     %s.
 
@@ -97,10 +99,10 @@ func getModuleInfo(m *Module) string {
 /*
    This function generates "modules" menu inside help message
 */
-func (u Unverblumt) generateModuleButtons() {
+func generateModuleButtons(u *core.Unverblumt, m map[string]core.Module) {
 	kb := [][]tb.InlineButton{}
 
-	for name, module := range u.Modules {
+	for name, module := range m {
 		id := uuid.NewString()
 
 		b := modulesSelector.Data(name, id).Inline()
@@ -120,7 +122,7 @@ func (u Unverblumt) generateModuleButtons() {
 /*
    Returns pretty-printed information about command
 */
-func commandInfo(name string, c Command) string {
+func commandInfo(name string, c core.Command) string {
 	const s = `<b>Usage:</b> <b>%s</b> <i>%s</i>
 
     %s`
@@ -130,10 +132,10 @@ func commandInfo(name string, c Command) string {
 /*
    This function generates "commands" menu inside help message
 */
-func (u Unverblumt) generateCommandButtons() {
+func generateCommandButtons(u *core.Unverblumt, m map[string]core.Module) {
 	kb := [][]tb.InlineButton{}
 
-	for _, module := range u.Modules {
+	for _, module := range m {
 		for name, command := range module.ActiveCommands {
 			id := uuid.NewString()
 
@@ -155,7 +157,7 @@ func (u Unverblumt) generateCommandButtons() {
    This function generates help data message using modules
    so it should be called after loading all modules
 */
-func (u Unverblumt) generateHelpData() {
+func generateHelpData(u *core.Unverblumt, mod map[string]core.Module) {
 	m = baseSelector.Data("Modules", "m")
 	c = baseSelector.Data("Commands", "c")
 
@@ -163,8 +165,8 @@ func (u Unverblumt) generateHelpData() {
 		baseSelector.Row(m, c),
 	)
 
-	u.generateModuleButtons()
-	u.generateCommandButtons()
+	generateModuleButtons(u, mod)
+	generateCommandButtons(u, mod)
 
 	u.Bot.Handle(&m, func(c tb.Context) error {
 		c.Respond(&tb.CallbackResponse{})
@@ -177,22 +179,8 @@ func (u Unverblumt) generateHelpData() {
 	})
 }
 
-/*
-   This wrapper is needed to access Unverblumt object from command
-   Maybe store needed information somewhere around?
-*/
-func (u Unverblumt) generateHelp() tb.HandlerFunc {
+func generateHelp() tb.HandlerFunc {
 	help := func(c tb.Context) error {
-		if len(c.Args()) > 0 {
-			for _, arg := range c.Args() {
-				if m, ok := u.Modules[arg]; ok {
-					c.Send(getModuleInfo(m))
-				}
-			}
-
-			return nil
-		}
-
 		const s = `You can click on buttons, or use the following syntax:
     <b>/help [command] | [module]</b>`
 		return c.Send(s, baseSelector)

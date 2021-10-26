@@ -4,19 +4,9 @@
 package main
 
 import (
-	"log"
-
-	"github.com/beshenkaD/unverblumt/core"
-	_ "github.com/joho/godotenv/autoload"
+	"github.com/beshenkaD/unverblumt/bot"
 )
 
 func main() {
-	u, err := core.New(getToken(), "HTML", false)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	loadModules(u)
-	u.Start()
+	bot.Start()
 }
