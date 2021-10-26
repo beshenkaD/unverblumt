@@ -9,16 +9,16 @@ import (
 	tb "gopkg.in/tucnak/telebot.v3"
 )
 
-func Start() {
-	base := &core.Module{
-		Name:        "a",
+var (
+	base = &core.Module{
+		Name:        "Base",
 		Author:      "",
 		License:     "",
 		Version:     "",
 		Description: "",
 		ActiveCommands: map[string]core.Command{
 			"/help": {
-				Handler:     generateHelp(),
+				Handler:     help,
 				Arguments:   "",
 				Description: "",
 			},
@@ -32,7 +32,9 @@ func Start() {
 			},
 		},
 	}
+)
 
+func Start() {
 	u, err := core.New(tb.Settings{
 		Token:     getToken(),
 		Poller:    &tb.LongPoller{Timeout: getTimeout()},
@@ -47,7 +49,7 @@ func Start() {
 	}
 
 	loadModules(u)
-	generateHelpData(u, u.GetModules())
+	generateHelp(u)
 
 	u.Start()
 }
