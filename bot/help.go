@@ -17,6 +17,7 @@ import (
 /*
    This function should pre-allocate all help information
 */
+
 func generateHelp(u *core.Unverblumt) {
 }
 
