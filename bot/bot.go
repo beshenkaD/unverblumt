@@ -24,9 +24,13 @@ var (
 			},
 
 			"/ping": {
-				Handler: func(c tb.Context) error {
-					return c.Send("pong")
-				},
+				Handler:     ping,
+				Arguments:   "",
+				Description: "",
+			},
+
+			"/lang": {
+				Handler:     language,
 				Arguments:   "",
 				Description: "",
 			},

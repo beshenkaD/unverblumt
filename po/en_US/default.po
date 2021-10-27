@@ -1,0 +1,8 @@
+msgid "Available languages: %v"
+msgstr ""
+
+msgid "Language `%s` successfully installed"
+msgstr ""
+
+msgid "Invalid value: `%s`"
+msgstr ""
