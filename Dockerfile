@@ -9,6 +9,6 @@ COPY . .
 RUN go mod download
 
 RUN go build
-RUN make plugins
+RUN make modules
 
 CMD ./unverblumt

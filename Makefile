@@ -1,4 +1,5 @@
 start:
-	go build -buildmode=plugin -o start.so modules/start/main.go
+	go build -buildmode=plugin -o $@.so modules/$@/main.go
+	strip $@.so
 
-plugins: start 
+modules: start 
