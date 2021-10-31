@@ -11,28 +11,30 @@ import (
 
 var (
 	base = &core.Module{
-		Name:        "Base",
-		Author:      "",
-		License:     "",
-		Version:     "",
-		Description: "",
-		ActiveCommands: map[string]core.Command{
+		Name:        "Main",
+		Author:      "Beshenka",
+		License:     "GNU GPL v2",
+		Version:     "0.0.1",
+		Description: "Provides basic bot functionality",
+		ActiveCommands: map[string]core.ActiveCommand{
 			"/help": {
 				Handler:     help,
-				Arguments:   "",
-				Description: "",
+				Description: "sends you this message",
 			},
 
 			"/ping": {
 				Handler:     ping,
-				Arguments:   "",
-				Description: "",
+				Description: "tests bot's reachability",
 			},
 
 			"/lang": {
-				Handler:     language,
-				Arguments:   "",
-				Description: "",
+				Handler:     lang,
+				Description: "changes language for current chat",
+			},
+
+			"/start": {
+				Handler:     start,
+				Description: "sends you a welcome message",
 			},
 		},
 	}
