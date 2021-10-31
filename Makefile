@@ -1,5 +1,9 @@
-start:
-	go build -buildmode=plugin -o $@.so modules/$@/main.go
+me:
+	go build -buildmode=plugin -o $@.so modules/$@/*.go
 	strip $@.so
 
-modules: start 
+weather:
+	go build -buildmode=plugin -o $@.so modules/$@/*.go
+	strip $@.so
+
+modules: me weather
