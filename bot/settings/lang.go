@@ -9,6 +9,10 @@ import (
 	"github.com/beshenkaD/unverblumt/internal/i18n"
 )
 
+/*
+   Maybe use database?
+*/
+
 type lang struct {
 	lock  sync.RWMutex
 	langs map[int64]string
