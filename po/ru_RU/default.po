@@ -1,9 +1,0 @@
-msgid "Available languages: %v"
-msgstr "Выберите один из доступных языков: %v"
-
-msgid "Language `%s` successfully installed"
-msgstr "Язык `%s` успешно установлен"
-
-msgid "Invalid value: `%s`"
-msgstr "Неверное значние: `%s`"
-
