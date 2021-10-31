@@ -5,8 +5,11 @@ package bot
 
 import (
 	"fmt"
+	"strings"
 	"sync"
 
+	"github.com/beshenkaD/unverblumt/bot/args"
+	"github.com/beshenkaD/unverblumt/bot/settings"
 	"github.com/beshenkaD/unverblumt/core"
 	"github.com/beshenkaD/unverblumt/internal/i18n"
 	tb "gopkg.in/tucnak/telebot.v3"
@@ -72,7 +75,7 @@ func getJustHelp(lang string) string {
         somearg1 - argument that defines something (required)
 	    somearg2 - argument that defines something
 */
-func getHelpForCommand(lang string, cmd string) (string, bool) {
+func getHelpForCommand(lang string, cmd string) string {
 	m.Lock()
 	defer m.Unlock()
 
@@ -81,6 +84,10 @@ func getHelpForCommand(lang string, cmd string) (string, bool) {
 			return "(" + i18n.T(lang, "required") + ")"
 		}
 		return ""
+	}
+
+	if cmd[0] != '/' && len(cmd) != 0 {
+		cmd = "/" + cmd
 	}
 
 	if c, ok := commands[cmd]; ok {
@@ -105,10 +112,10 @@ func getHelpForCommand(lang string, cmd string) (string, bool) {
 			f += long
 		}
 
-		return fmt.Sprintf(f, cmd, i18n.T(lang, c.Description)), true
+		return fmt.Sprintf(f, cmd, i18n.T(lang, c.Description))
 	}
 
-	return "", false
+	return fmt.Sprintf("%s not found", cmd)
 }
 
 /*
@@ -127,9 +134,11 @@ func getHelpForCommand(lang string, cmd string) (string, bool) {
        someFilter - filters something
        ...
 */
-func getHelpForModule(lang string, mod string) (string, bool) {
+func getHelpForModule(lang string, mod string) string {
 	m.Lock()
 	defer m.Unlock()
+
+	mod = strings.Title(mod)
 
 	if m, ok := modules[mod]; ok {
 		f := "<b>%s</b>: %s\n\n"
@@ -169,12 +178,36 @@ func getHelpForModule(lang string, mod string) (string, bool) {
 			f += passive
 		}
 
-		return fmt.Sprintf(f, i18n.T(lang, m.Name), i18n.T(lang, m.Description)), true
+		return fmt.Sprintf(f, i18n.T(lang, m.Name), i18n.T(lang, m.Description))
 	}
 
-	return "", false
+	return fmt.Sprintf("%s not found", mod)
 }
 
 func help(c tb.Context) error {
-	return c.Send("not implemented yet")
+	lang := settings.Lang.Get(c.Chat().ID)
+
+	if len(c.Args()) == 0 {
+		return c.Send(getJustHelp(lang))
+	}
+
+	var a struct {
+		Command string
+		Module  string
+	}
+
+	err := args.Parse(c.Text(), &a)
+	if err != nil {
+		return c.Send(i18n.T(lang, err.Error()))
+	}
+
+	if a.Command != "" {
+		c.Send(getHelpForCommand(lang, a.Command))
+	}
+
+	if a.Module != "" {
+		c.Send(getHelpForModule(lang, a.Module))
+	}
+
+	return nil
 }
