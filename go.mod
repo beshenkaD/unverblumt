@@ -3,6 +3,7 @@ module github.com/beshenkaD/unverblumt
 go 1.16
 
 require (
+	github.com/itzg/go-flagsfiller v1.6.0 // indirect
 	github.com/joho/godotenv v1.4.0
 	github.com/leonelquinteros/gotext v1.5.0
 	golang.org/x/text v0.3.7
