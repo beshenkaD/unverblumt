@@ -32,7 +32,7 @@ func Init() *core.Module {
 			"/me": {
 				Handler: me,
 				Arguments: []core.Argument{
-					{Name: "action", Description: "action you would perform", Required: true},
+					{Name: "your message", Description: "anything", Required: true},
 				},
 				Description: "/me command from IRC",
 			},
