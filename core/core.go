@@ -1,6 +1,10 @@
 // Copyright (C) 2021 beshenkaD
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+/*
+   This package is responsive for low-level bot organization
+   All it's point is managing modules.
+*/
 package core
 
 import (
@@ -11,12 +15,20 @@ import (
 	tb "gopkg.in/tucnak/telebot.v3"
 )
 
-/*
-   Represents any command that can be passed to bot
-*/
-type Command struct {
+type Argument struct {
+	Name        string
+	Description string
+	Required    bool
+}
+
+type ActiveCommand struct {
 	Handler     tb.HandlerFunc
-	Arguments   string
+	Description string
+	Arguments   []Argument
+}
+
+type PassiveCommand struct {
+	Handler     tb.HandlerFunc
 	Description string
 }
 
@@ -31,8 +43,8 @@ type Module struct {
 	License         string
 	Version         string
 	Description     string
-	ActiveCommands  map[string]Command
-	PassiveCommands map[string][]Command
+	ActiveCommands  map[string]ActiveCommand
+	PassiveCommands map[string][]PassiveCommand
 }
 
 /*
