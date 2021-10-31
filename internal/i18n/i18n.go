@@ -10,31 +10,52 @@ import (
 )
 
 const (
+	library         = "po"
 	DefaultLanguage = "en_US"
 )
 
 var (
-	avail []string
+	available []string
 )
 
 func init() {
-	gotext.Configure("po", DefaultLanguage, "default")
-
-	t, _ := ioutil.ReadDir(gotext.GetLibrary())
+	t, _ := ioutil.ReadDir(library)
 
 	for _, f := range t {
-		avail = append(avail, f.Name())
+		available = append(available, f.Name())
 	}
 
 }
 
-func T(lang string, val string, vars ...interface{}) string {
-	// There is a mutex inside, don't worry
-	gotext.SetLanguage(lang)
+func getLocale(lang, domain string) *gotext.Locale {
+	l := gotext.NewLocale(library, lang)
+	l.AddDomain(domain)
 
-	return gotext.Get(val, vars...)
+	return l
+}
+
+/*
+   Translate using default domain
+*/
+func T(l, val string, vars ...interface{}) string {
+	return getLocale(l, "default").Get(val, vars...)
+}
+
+/*
+   Translate using specified domain
+*/
+func TD(l, d, val string, vars ...interface{}) string {
+	return getLocale(l, d).Get(val, vars...)
+}
+
+/*
+   Returns short version of language code
+   Example: en_US -> en
+*/
+func Short(code string) string {
+	return code[:2]
 }
 
 func GetAvailableLanguages() []string {
-	return avail
+	return available
 }
