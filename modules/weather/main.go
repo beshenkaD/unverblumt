@@ -12,8 +12,8 @@ func Init() *core.Module {
 		Name:        "Weather",
 		Author:      "Beshenka",
 		License:     "GNU GPL v2",
-		Version:     "0.0.1",
-		Description: "ummm weather i guess",
+		Version:     "0.1.2",
+		Description: "provides weather forecast",
 
 		ActiveCommands: map[string]core.ActiveCommand{
 			"/wttr": wttr,
