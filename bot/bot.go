@@ -14,7 +14,7 @@ var (
 		Name:        "Main",
 		Author:      "Beshenka",
 		License:     "GNU GPL v2",
-		Version:     "0.0.1",
+		Version:     "0.0.4",
 		Description: "Provides basic bot functionality",
 		ActiveCommands: map[string]core.ActiveCommand{
 			"/help": {
