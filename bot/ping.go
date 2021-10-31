@@ -4,9 +4,11 @@
 package bot
 
 import (
+	st "github.com/beshenkaD/unverblumt/bot/settings"
+	"github.com/beshenkaD/unverblumt/internal/i18n"
 	tb "gopkg.in/tucnak/telebot.v3"
 )
 
 func ping(c tb.Context) error {
-	return c.Send("pong")
+	return c.Send(i18n.T(st.Lang.Get(c.Chat().ID), "pong"))
 }
