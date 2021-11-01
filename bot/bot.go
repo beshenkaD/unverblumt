@@ -20,6 +20,10 @@ var (
 			"/help": {
 				Handler:     help,
 				Description: "sends you this message",
+				Arguments: []core.Argument{
+					{Name: "-command", Description: "command about which you need to get help", Required: false},
+					{Name: "-module", Description: "module about which you need to get help", Required: false},
+				},
 			},
 
 			"/ping": {
