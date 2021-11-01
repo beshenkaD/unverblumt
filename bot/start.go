@@ -9,11 +9,17 @@ import (
 	tb "gopkg.in/tucnak/telebot.v3"
 )
 
+const startMessage = `<b>Welcome!</b>
+Unverblümt is a general purpose telegram bot designed to be comfortable and powerful.
+
+Source code is available here: github.com/beshenkaD/unverblumt
+Use <b>/help</b> to get information about usage.`
+
 func start(c tb.Context) error {
 	if c.Message().Private() {
 		msg := i18n.T(
 			settings.Lang.Get(c.Chat().ID),
-			"not implemented",
+			startMessage,
 		)
 
 		return c.Send(msg, &tb.SendOptions{
