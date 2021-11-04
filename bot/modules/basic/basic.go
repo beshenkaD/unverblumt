@@ -18,8 +18,8 @@ var (
 				Handler:     help,
 				Description: "sends you this message",
 				Arguments: []core.Argument{
-					{Name: "-command", Description: "command about which you need to get help", Required: false},
-					{Name: "-module", Description: "module about which you need to get help", Required: false},
+					{Name: "-c", Description: "command about which you need to get help", Required: false},
+					{Name: "-m", Description: "module about which you need to get help", Required: false},
 				},
 			},
 

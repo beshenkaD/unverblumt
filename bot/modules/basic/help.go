@@ -192,8 +192,8 @@ func help(c tb.Context) error {
 	}
 
 	var a struct {
-		Command string
-		Module  string
+		C string
+		M string
 	}
 
 	err := args.Parse(c.Text(), &a)
@@ -201,12 +201,12 @@ func help(c tb.Context) error {
 		return c.Send(i18n.T(lang, err.Error()))
 	}
 
-	if a.Command != "" {
-		c.Send(getHelpForCommand(lang, a.Command))
+	if a.C != "" {
+		c.Send(getHelpForCommand(lang, a.C))
 	}
 
-	if a.Module != "" {
-		c.Send(getHelpForModule(lang, a.Module))
+	if a.M != "" {
+		c.Send(getHelpForModule(lang, a.M))
 	}
 
 	return nil
