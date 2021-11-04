@@ -7,44 +7,34 @@ import (
 	"strings"
 	"time"
 
+	"github.com/beshenkaD/unverblumt/bot/modules/basic"
 	"github.com/beshenkaD/unverblumt/core"
 	"github.com/beshenkaD/unverblumt/internal/log"
 	tb "gopkg.in/tucnak/telebot.v3"
 )
 
 var (
-	base = &core.Module{
-		Name:        "Main",
-		Author:      "Beshenka",
-		License:     "GNU GPL v2",
-		Version:     "0.0.4",
-		Description: "Provides basic bot functionality",
-		ActiveCommands: map[string]core.ActiveCommand{
-			"/help": {
-				Handler:     help,
-				Description: "sends you this message",
-				Arguments: []core.Argument{
-					{Name: "-command", Description: "command about which you need to get help", Required: false},
-					{Name: "-module", Description: "module about which you need to get help", Required: false},
-				},
-			},
+// base = &core.Module{
+// ActiveCommands: map[string]core.ActiveCommand{
+// 	"/help": {
+// 	},
 
-			"/ping": {
-				Handler:     ping,
-				Description: "tests bot's reachability",
-			},
+// 	"/ping": {
+// 		Handler:     ping,
+// 		Description: "tests bot's reachability",
+// 	},
 
-			"/lang": {
-				Handler:     lang,
-				Description: "changes language for current chat",
-			},
+// 	"/lang": {
+// 		Handler:     lang,
+// 		Description: "changes language for current chat",
+// 	},
 
-			"/start": {
-				Handler:     start,
-				Description: "sends you a welcome message",
-			},
-		},
-	}
+// 	"/start": {
+// 		Handler:     start,
+// 		Description: "sends you a welcome message",
+// 	},
+// },
+// }
 )
 
 type Config struct {
@@ -80,14 +70,15 @@ func Start(c *Config) {
 		OnError: func(err error, c tb.Context) {
 			log.Warn.Println(err)
 		},
-	}, base)
+	}, basic.Module)
 
 	if err != nil {
 		log.Error.Fatal(err)
 	}
 
 	load(u, c.Modules)
-	generateHelp(u)
+
+	basic.GenerateHelp(u)
 
 	u.Start()
 }

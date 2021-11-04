@@ -1,7 +1,7 @@
 // Copyright (C) 2021 beshenkaD
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-package bot
+package basic
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ var (
 	modules  = make(map[string]core.Module)
 )
 
-func generateHelp(u *core.Unverblumt) {
+func GenerateHelp(u *core.Unverblumt) {
 	for n, m := range u.GetModules() {
 		modules[n] = m
 	}
