@@ -97,15 +97,20 @@ func getHelpForCommand(lang string, cmd string) string {
 
 		for _, arg := range c.Arguments {
 			long += fmt.Sprintf(
-				"    %s — %s <b>%s</b>\n",
+				"    <code>%s</code> — %s <b>%s</b>\n",
 				i18n.T(lang, arg.Name),
 				i18n.T(lang, arg.Description),
 				r(arg.Required),
 			)
 		}
 
+		options := ""
+		if len(c.Arguments) != 0 {
+			options = "[" + i18n.T(lang, "options") + "]"
+		}
+
 		f += fmt.Sprintf(
-			"<b>%s</b>: %s [%s]\n\n", i18n.T(lang, "Usage"), cmd, i18n.T(lang, "options"))
+			"<b>%s</b>: %s %s\n\n", i18n.T(lang, "Usage"), cmd, options)
 
 		if long != "" {
 			f += "<b>" + i18n.T(lang, "Options") + "</b>" + ":\n"
