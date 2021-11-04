@@ -45,14 +45,28 @@ func GenerateHelp(u *core.Unverblumt) {
        /command2 - description
    ...
 */
+const helpMessage = `<b>Arguments</b>
+This bot uses shell/flag syntax for command arguments.
+
+<u>basic syntax</u>:  <code>/command -option value</code>
+<u>for arrays</u>:  <code>/command -colors "red,green,blue"</code>
+<u>for booleans</u>:  <code>/command -usesomething</code>
+<u>for maps</u>:  <code>/command -codes "blue:1,red:2"</code>
+
+<b>Detailed help</b>
+Use <code>/help -c "command name"</code> to get detailed help about command.
+And <code>/help -m "module name"</code> same for module.
+
+<b>Available modules:</b>`
+
 func getJustHelp(lang string) string {
-	f := "%s\n\n"
+	f := "%s\n"
 
 	m.Lock()
 	defer m.Unlock()
 
 	for n, m := range modules {
-		name := "<b>" + i18n.T(lang, n) + "</b>"
+		name := "<u>" + i18n.T(lang, n) + "</u>"
 
 		mf := name + "\n"
 
@@ -63,7 +77,7 @@ func getJustHelp(lang string) string {
 		f += mf + "\n"
 	}
 
-	return fmt.Sprintf(f, i18n.T(lang, "brief overview"))
+	return fmt.Sprintf(f, i18n.T(lang, helpMessage))
 }
 
 /*
