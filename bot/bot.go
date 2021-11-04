@@ -4,6 +4,9 @@
 package bot
 
 import (
+	"strings"
+	"time"
+
 	"github.com/beshenkaD/unverblumt/core"
 	"github.com/beshenkaD/unverblumt/internal/log"
 	tb "gopkg.in/tucnak/telebot.v3"
@@ -44,10 +47,35 @@ var (
 	}
 )
 
-func Start() {
+type Config struct {
+	Telegram string
+	Modules  []string
+	Timeout  time.Duration
+}
+
+func load(u *core.Unverblumt, modules []string) {
+	if len(modules) == 0 {
+		log.Warn.Println("Loading without external modules")
+		return
+	}
+
+	for _, path := range modules {
+		path = strings.TrimSpace(path) + ".so"
+		m, err := u.LoadModule(path)
+
+		if err != nil {
+			log.Warn.Println(err)
+			continue
+		}
+
+		u.RegisterModule(m)
+	}
+}
+
+func Start(c *Config) {
 	u, err := core.New(tb.Settings{
-		Token:     getToken(),
-		Poller:    &tb.LongPoller{Timeout: getTimeout()},
+		Token:     c.Telegram,
+		Poller:    &tb.LongPoller{Timeout: c.Timeout},
 		ParseMode: "HTML",
 		OnError: func(err error, c tb.Context) {
 			log.Warn.Println(err)
@@ -58,7 +86,7 @@ func Start() {
 		log.Error.Fatal(err)
 	}
 
-	loadModules(u)
+	load(u, c.Modules)
 	generateHelp(u)
 
 	u.Start()

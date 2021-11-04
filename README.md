@@ -24,8 +24,8 @@ make modules
 To configure bot export some environment variables:
 ``` shell script
 export UNVERBLUMT_TELEGRAM="Your token"
-export UNVERBLUMT_TIMEOUT="Your timeout"
-export UNVERBLUMT_MODULES="Space-separated paths to modules"
+export UNVERBLUMT_TIMEOUT="10s"
+export UNVERBLUMT_MODULES="any, modules, you, like"
 ```
 
 Or write it to `.env` file
@@ -40,8 +40,8 @@ docker build . --tag u
 ``` shell script
 docker run \
     -e UNVERBLUMT_TELEGRAM="Your token" \
-    -e UNVERBLUMT_TIMEOUT="Your timeout" \
-    -e UNVERBLUMT_MODULES="Space-separated paths to modules" \
+    -e UNVERBLUMT_TIMEOUT="10s" \
+    -e UNVERBLUMT_MODULES="any, modules, you, like" \
     u
 ```
 

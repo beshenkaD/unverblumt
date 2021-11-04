@@ -5,8 +5,18 @@ package main
 
 import (
 	"github.com/beshenkaD/unverblumt/bot"
+	"github.com/beshenkaD/unverblumt/internal/log"
+	_ "github.com/joho/godotenv/autoload"
+	"github.com/kelseyhightower/envconfig"
 )
 
 func main() {
-	bot.Start()
+	var c bot.Config
+
+	err := envconfig.Process("unverblumt", &c)
+	if err != nil {
+		log.Error.Fatal(err)
+	}
+
+	bot.Start(&c)
 }
