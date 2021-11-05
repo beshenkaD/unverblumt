@@ -10,5 +10,5 @@ import (
 )
 
 func ping(c tb.Context) error {
-	return c.Send(i18n.T(st.Lang.Get(c.Chat().ID), "pong"))
+	return c.Send(i18n.T(st.Lang.Get(c), "pong"))
 }

@@ -24,7 +24,7 @@ func add(c tb.Context, btn *tb.Btn, code, full string) {
 }
 
 func lang(c tb.Context) error {
-	current := st.Lang.Get(c.Chat().ID)
+	current := st.Lang.Get(c)
 
 	selector := &tb.ReplyMarkup{}
 

@@ -34,7 +34,7 @@ func _wttr(c tb.Context) error {
 		Lang string
 	}
 	a.Loc = "Moscow"
-	a.Lang = i18n.Short(settings.Lang.Get(c.Chat().ID))
+	a.Lang = settings.Lang.Get(c)
 
 	if err := args.Parse(c.Text(), &a); err != nil {
 		return c.Send(i18n.T(a.Lang, err.Error()))

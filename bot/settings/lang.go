@@ -6,7 +6,7 @@ package settings
 import (
 	"sync"
 
-	"github.com/beshenkaD/unverblumt/internal/i18n"
+	tb "gopkg.in/tucnak/telebot.v3"
 )
 
 /*
@@ -25,15 +25,15 @@ func (l *lang) Set(chatID int64, lang string) {
 	l.langs[chatID] = lang
 }
 
-func (l *lang) Get(chatID int64) string {
+func (l *lang) Get(c tb.Context) string {
 	l.lock.RLock()
 	defer l.lock.RUnlock()
 
-	if lang, ok := l.langs[chatID]; ok {
+	if lang, ok := l.langs[c.Chat().ID]; ok {
 		return lang
 	}
 
-	return i18n.DefaultLanguage
+	return c.Sender().LanguageCode
 }
 
 func newLang() *lang {

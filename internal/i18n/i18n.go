@@ -11,7 +11,7 @@ import (
 
 const (
 	library         = "po"
-	DefaultLanguage = "en_US"
+	DefaultLanguage = "en"
 )
 
 var (
@@ -46,14 +46,6 @@ func T(l, val string, vars ...interface{}) string {
 */
 func TD(l, d, val string, vars ...interface{}) string {
 	return getLocale(l, d).Get(val, vars...)
-}
-
-/*
-   Returns short version of language code
-   Example: en_US -> en
-*/
-func Short(code string) string {
-	return code[:2]
 }
 
 func GetAvailableLanguages() []string {

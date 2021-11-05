@@ -18,7 +18,7 @@ Use <b>/help</b> to get information about usage.`
 func start(c tb.Context) error {
 	if c.Message().Private() {
 		msg := i18n.T(
-			settings.Lang.Get(c.Chat().ID),
+			settings.Lang.Get(c),
 			startMessage,
 		)
 

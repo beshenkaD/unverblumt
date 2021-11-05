@@ -204,7 +204,7 @@ func getHelpForModule(lang string, mod string) string {
 }
 
 func help(c tb.Context) error {
-	lang := settings.Lang.Get(c.Chat().ID)
+	lang := settings.Lang.Get(c)
 
 	if len(c.Args()) == 0 {
 		return c.Send(getJustHelp(lang))
