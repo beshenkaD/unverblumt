@@ -3,7 +3,9 @@
 
 package basic
 
-import "github.com/beshenkaD/unverblumt/core"
+import (
+	"github.com/beshenkaD/unverblumt/core"
+)
 
 var (
 	Module = &core.Module{
