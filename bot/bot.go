@@ -8,33 +8,10 @@ import (
 	"time"
 
 	"github.com/beshenkaD/unverblumt/bot/modules/basic"
+	"github.com/beshenkaD/unverblumt/bot/modules/stat"
 	"github.com/beshenkaD/unverblumt/core"
 	"github.com/beshenkaD/unverblumt/internal/log"
 	tb "gopkg.in/tucnak/telebot.v3"
-)
-
-var (
-// base = &core.Module{
-// ActiveCommands: map[string]core.ActiveCommand{
-// 	"/help": {
-// 	},
-
-// 	"/ping": {
-// 		Handler:     ping,
-// 		Description: "tests bot's reachability",
-// 	},
-
-// 	"/lang": {
-// 		Handler:     lang,
-// 		Description: "changes language for current chat",
-// 	},
-
-// 	"/start": {
-// 		Handler:     start,
-// 		Description: "sends you a welcome message",
-// 	},
-// },
-// }
 )
 
 type Config struct {
@@ -70,7 +47,7 @@ func Start(c *Config) {
 		OnError: func(err error, c tb.Context) {
 			log.Warn.Println(err)
 		},
-	}, basic.Module)
+	}, basic.Module, stat.Module)
 
 	if err != nil {
 		log.Error.Fatal(err)
