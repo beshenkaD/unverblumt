@@ -38,13 +38,15 @@ type PassiveCommand struct {
    PassiveCommands - commands called on some event. Example: `tb.OnText`
 */
 type Module struct {
-	Name            string
-	Author          string
-	License         string
-	Version         string
-	Description     string
+	Name        string
+	Author      string
+	License     string
+	Version     string
+	Description string
+
 	ActiveCommands  map[string]ActiveCommand
 	PassiveCommands map[string][]PassiveCommand
+	PollerFuncs     []func(*tb.Update) bool
 }
 
 /*
@@ -89,6 +91,13 @@ func (u *Unverblumt) RegisterModule(m *Module) {
 		m.PassiveCommands[k] = v
 		u.setHandler(k)
 	}
+
+	newPoller := u.Bot.Poller
+	for _, p := range m.PollerFuncs {
+		newPoller = tb.NewMiddlewarePoller(newPoller, p)
+	}
+
+	u.Bot.Poller = newPoller
 
 	log.Info.Printf("Module `%s` has been registered", name)
 }
