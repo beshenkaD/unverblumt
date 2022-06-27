@@ -1,1 +1,1 @@
-worker: bin/unverblumt
+worker: ./bin/unverblumt
