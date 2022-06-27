@@ -4,31 +4,11 @@
 package i18n
 
 import (
-	"io/ioutil"
-
 	"github.com/leonelquinteros/gotext"
 )
 
-const (
-	library         = "po"
-	DefaultLanguage = "en"
-)
-
-var (
-	available []string
-)
-
-func init() {
-	t, _ := ioutil.ReadDir(library)
-
-	for _, f := range t {
-		available = append(available, f.Name())
-	}
-
-}
-
 func getLocale(lang, domain string) *gotext.Locale {
-	l := gotext.NewLocale(library, lang)
+	l := gotext.NewLocale("po", lang)
 	l.AddDomain(domain)
 
 	return l
@@ -42,12 +22,8 @@ func T(l, val string, vars ...interface{}) string {
 }
 
 /*
-   Translate using specified domain
+   Translate using given domain
 */
-func TD(l, d, val string, vars ...interface{}) string {
-	return getLocale(l, d).Get(val, vars...)
-}
-
-func GetAvailableLanguages() []string {
-	return available
+func TD(l, domain, val string, vars ...interface{}) string {
+	return getLocale(l, domain).Get(val, vars...)
 }

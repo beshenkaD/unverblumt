@@ -1,4 +1,4 @@
-FROM golang:1.16-alpine
+FROM golang:1.18-alpine
 
 RUN apk add build-base
 
@@ -8,7 +8,6 @@ COPY . .
 
 RUN go mod download
 
-RUN go build
-RUN make modules
+RUN go build -o bot
 
-CMD ./unverblumt
+CMD ./bot

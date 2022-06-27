@@ -4,19 +4,15 @@
 package main
 
 import (
-	"github.com/beshenkaD/unverblumt/bot"
-	"github.com/beshenkaD/unverblumt/internal/log"
+	"github.com/beshenkaD/unverblumt/modules/me"
+	"github.com/beshenkaD/unverblumt/modules/random"
+	u "github.com/beshenkaD/unverblumt/unverblumt"
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/kelseyhightower/envconfig"
 )
 
 func main() {
-	var c bot.Config
-
-	err := envconfig.Process("unverblumt", &c)
-	if err != nil {
-		log.Error.Fatal(err)
-	}
-
-	bot.Start(&c)
+	u.Run(
+		&me.Me{},
+		&random.Random{},
+	)
 }
