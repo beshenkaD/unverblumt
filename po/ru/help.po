@@ -21,3 +21,12 @@ msgstr "действие которое вы хотите совершить"
 
 msgid "find out when the event will happen"
 msgstr "узнать когда произойдет событие"
+
+msgid "string"
+msgstr "строка"
+
+msgid "string to flip"
+msgstr "строка которую бот перевернет"
+
+msgid "flips string upside-down"
+msgstr "переворачивает строку вверх ногами"

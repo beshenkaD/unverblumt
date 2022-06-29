@@ -3,3 +3,6 @@ msgstr ""
 
 msgid "please provide an action"
 msgstr ""
+
+msgid "please provide string to flip"
+msgstr ""

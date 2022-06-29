@@ -21,3 +21,12 @@ msgstr ""
 
 msgid "find out when the event will happen"
 msgstr ""
+
+msgid "string"
+msgstr ""
+
+msgid "string to flip"
+msgstr ""
+
+msgid "flips string upside-down"
+msgstr ""
