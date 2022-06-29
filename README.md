@@ -1,5 +1,5 @@
 # Unverblümt
-Modularized general purpose telegram bot.
+General purpose telegram bot.
 
 ## Installing
 ### From source
@@ -8,24 +8,10 @@ Modularized general purpose telegram bot.
 go build
 ```
 
-This command will build the bot itself
-
-**2. Building modules**  
-To build needed modules use:
-``` shell script
-make {needed modules}
-```
-Or to build all modules:
-``` shell script
-make modules
-```
-
 **3. Configuring**  
 To configure bot export some environment variables:
 ``` shell script
-export UNVERBLUMT_TELEGRAM="Your token"
-export UNVERBLUMT_TIMEOUT="10s"
-export UNVERBLUMT_MODULES="any, modules, you, like"
+export UNVERBLUMT_TOKEN="Your token"
 ```
 
 Or write it to `.env` file
@@ -39,46 +25,8 @@ docker build . --tag u
 **2. Run it :)**
 ``` shell script
 docker run \
-    -e UNVERBLUMT_TELEGRAM="Your token" \
-    -e UNVERBLUMT_TIMEOUT="10s" \
-    -e UNVERBLUMT_MODULES="any, modules, you, like" \
+    -e UNVERBLUMT_TOKEN="Your token" \
     u
-```
-
-## How to write modules?
-**1. Import some packages**
-``` go
-import (
-	"github.com/beshenkaD/unverblumt/core"
-	tb "gopkg.in/tucnak/telebot.v3"
-)
-```
-
-**2. Write your awesome commands**
-``` go
-func hello(c tb.Context) error {
-	return c.Send("Hello from module!")
-}
-```
-
-**3. Export your module with `Init` function**
-``` go
-func Init() *core.Module {
-	return &core.Module{
-		Name:        "Hello Module",
-		License:     "My favorite license",
-		Author:      "Me",
-		Version:     "0.0.1",
-		Description: "My module",
-
-		ActiveCommands: map[string]core.Command{
-			"/hello": {
-				Handler:     hello,
-				Description: "My command",
-			},
-		},
-	}
-}
 ```
 
 # License
