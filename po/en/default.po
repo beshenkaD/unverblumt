@@ -1,0 +1,5 @@
+msgid "pong"
+msgstr ""
+
+msgid "please provide an action"
+msgstr ""

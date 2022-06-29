@@ -30,8 +30,8 @@ func (u *unverblumt) _brief(lang string) string {
 }
 
 func _detail(c *Command, lang string) string {
-	arg := func(lang string, a Arg) string {
-		return i18n.TD(lang, "help", "%s : %s", a.Name, a.Desc)
+	arg := func(a Arg) string {
+		return fmt.Sprintf("%s : %s", i18n.TD(lang, "help", a.Name), i18n.TD(lang, "help", a.Desc))
 	}
 
 	enquote := func(s, o, c string) string {
@@ -51,7 +51,7 @@ func _detail(c *Command, lang string) string {
 			optional += n + " "
 		}
 
-		descriptions += arg(lang, a) + "\n    "
+		descriptions += arg(a) + "\n    "
 	}
 
 	if required != "" {
@@ -64,5 +64,5 @@ func _detail(c *Command, lang string) string {
 		optional = style.Bold(optional)
 	}
 
-	return fmt.Sprintf("%s %s %s : %s\n    %s", c.Cmd, required, optional, c.Desc, descriptions)
+	return fmt.Sprintf("%s %s %s : %s\n    %s", c.Cmd, required, optional, i18n.TD(lang, "help", c.Desc), descriptions)
 }

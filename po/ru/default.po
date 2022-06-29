@@ -1,0 +1,5 @@
+msgid "pong"
+msgstr "понг"
+
+msgid "please provide an action"
+msgstr "напишите действие которое хотите выполнить"

@@ -1,0 +1,23 @@
+msgid "check if bot is active"
+msgstr ""
+
+msgid "usage for the bot"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "show usage for given command name"
+msgstr ""
+
+msgid "command from IRC"
+msgstr ""
+
+msgid "action"
+msgstr ""
+
+msgid "the action you want to perform"
+msgstr ""
+
+msgid "find out when the event will happen"
+msgstr ""
