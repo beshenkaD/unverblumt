@@ -70,12 +70,23 @@ func (u *unverblumt) AddCommand(c *Command) {
 }
 
 func (u *unverblumt) setCommands() {
+	var cmds []tb.Command
 
+	for _, c := range u.commands {
+		cmds = append(cmds, tb.Command{
+			Text:        c.Cmd[1:],
+			Description: c.Desc,
+		})
+	}
+
+	if err := u.Bot.SetCommands(cmds); err != nil {
+		log.Error.Println(err)
+	}
 }
 
 // add builtin middleware that rejects all disabled commands
-func (u *unverblumt) disableLocal(cmd string, chatID int) {
-}
+// func (u *unverblumt) disableLocal(cmd string, chatID int) {
+// }
 
-func (u *unverblumt) disableGlobal(cmd string) {
-}
+// func (u *unverblumt) disableGlobal(cmd string) {
+// }
