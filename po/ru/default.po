@@ -2,6 +2,12 @@
 msgid "pong"
 msgstr "понг"
 
+msgid "start_"
+msgstr "<b>Привет!</b>\n"
+"Unverblümt — универсальный бот призванный быть удобным и мощным.\n"
+"Исходный код находится тут: github.com/beshenkaD/unverblumt\n"
+"Используйте <b>/help</b> чтобы узнать как пользоваться ботом."
+
 # Me
 msgid "please provide an action"
 msgstr "напишите действие которое хотите выполнить"

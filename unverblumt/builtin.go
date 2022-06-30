@@ -11,6 +11,7 @@ import (
 func loadBuiltins() {
 	ping()
 	help()
+	start()
 }
 
 func ping() {
@@ -38,6 +39,24 @@ func help() {
 		},
 		Handler: func(c telebot.Context) error {
 			return c.Reply(Get().GenerateHelp(c.Sender().LanguageCode, c.Args()))
+		},
+	})
+}
+
+func start() {
+	Get().AddCommand(&Command{
+		Cmd:  "/start",
+		Desc: "start message",
+		Args: nil,
+		Handler: func(c telebot.Context) error {
+			if c.Message().Private() {
+				msg := i18n.T(c.Sender().LanguageCode, "start_")
+
+				return c.Send(msg, &telebot.SendOptions{
+					DisableWebPagePreview: true,
+				})
+			}
+			return nil
 		},
 	})
 }

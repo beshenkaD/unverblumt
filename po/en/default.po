@@ -2,6 +2,12 @@
 msgid "pong"
 msgstr ""
 
+msgid "start_"
+msgstr "<b>Welcome</b>\n"
+"Unverblümt is a general purpose telegram bot designed to be comfortable and powerful.\n"
+"Source code is available here: github.com/beshenkaD/unverblumt\n"
+"Use <b>/help</b> to get information about usage."
+
 # Me
 msgid "please provide an action"
 msgstr ""
