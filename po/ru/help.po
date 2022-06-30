@@ -11,6 +11,9 @@ msgstr "команда"
 msgid "show usage for given command name"
 msgstr "показать помощь для заданной команды"
 
+msgid "start message"
+msgstr "стартовое сообщение"
+
 # Me
 msgid "command from IRC"
 msgstr "команда из IRC"

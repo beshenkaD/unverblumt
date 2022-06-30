@@ -11,6 +11,9 @@ msgstr ""
 msgid "show usage for given command name"
 msgstr ""
 
+msgid "start message"
+msgstr ""
+
 # Me
 msgid "command from IRC"
 msgstr ""

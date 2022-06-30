@@ -12,7 +12,7 @@ import (
 
 func (u *unverblumt) GenerateHelp(lang string, args []string) string {
 	if len(args) == 0 {
-		return u._brief(lang)
+		return i18n.T(lang, "preamble_") + "\n" + u._brief(lang)
 	}
 
 	if c, ok := u.commands[args[0]]; ok {

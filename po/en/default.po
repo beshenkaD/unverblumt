@@ -8,6 +8,12 @@ msgstr "<b>Welcome</b>\n"
 "Source code is available here: github.com/beshenkaD/unverblumt\n"
 "Use <b>/help</b> to get information about usage."
 
+msgid "preamble_"
+msgstr "This bot supports passing parameters to commands.\n"
+"Example: <i>/cmd arg1 arg2</i>\n"
+"to get detailed help on a specific command, use: <i>/help [command name]</i>.\n"
+"Example: <code>/help ping</code>\n"
+
 # Me
 msgid "please provide an action"
 msgstr ""
