@@ -1,8 +1,78 @@
+# Builtin
 msgid "pong"
 msgstr "понг"
 
+# Me
 msgid "please provide an action"
 msgstr "напишите действие которое хотите выполнить"
 
+# Text
 msgid "please provide string to flip"
 msgstr "напишите строку которую хотите перевернуть"
+
+# Random
+msgid "shaking the magic ball"
+msgstr "трясем волшебный шар"
+
+msgid "magic ball said: "
+msgstr "волшебный шар сказал: "
+
+msgid "It is certain"
+msgstr "Бесспорно"
+
+msgid "It is decidedly so"
+msgstr "Предрешено"
+
+msgid "Without a doubt"
+msgstr "Никаких сомнений"
+
+msgid "Yes — definitely"
+msgstr "Определённо да"
+
+msgid "You may rely on it"
+msgstr "Можешь быть уверен в этом"
+
+msgid "As I see it, yes"
+msgstr "Мне кажется — да"
+
+msgid "Most likely"
+msgstr "Вероятнее всего"
+
+msgid "Outlook good"
+msgstr "Хорошие перспективы"
+
+msgid "Signs point to yes"
+msgstr "Знаки говорят — да"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "Reply hazy, try again"
+msgstr "Пока не ясно, попробуй снова"
+
+msgid "Ask again later"
+msgstr "Спроси позже"
+
+msgid "Better not tell you now"
+msgstr "Лучше не рассказывать"
+
+msgid "Cannot predict now"
+msgstr "Сейчас нельзя предсказать"
+
+msgid "Concentrate and ask again"
+msgstr "Сконцентрируйся и спроси ещё раз"
+
+msgid "Don’t count on it"
+msgstr "Даже не думай"
+
+msgid "My reply is no"
+msgstr "Мой ответ — «нет»"
+
+msgid "My sources say no"
+msgstr "По моим данным — нет"
+
+msgid "Outlook not so good"
+msgstr "Перспективы не очень хорошие"
+
+msgid "Very doubtful"
+msgstr "Очень сомнительно"

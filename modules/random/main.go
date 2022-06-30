@@ -29,7 +29,23 @@ func (m *Random) Commands() []*u.Command {
 			Desc:    "find out when the event will happen",
 			Handler: when,
 		},
+		{
+			Cmd:  "/ball",
+			Desc: "magic ball will help you make the right decision",
+			Args: []u.Arg{
+				{
+					Name:     "question",
+					Desc:     "what you want to ask the magic ball",
+					Required: false,
+				},
+			},
+			Handler: crystalBall,
+		},
 	}
+}
+
+func randIntInRange(min, max int) int {
+	return myRand.Intn(max-min) + min
 }
 
 func when(c telebot.Context) error {

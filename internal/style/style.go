@@ -3,6 +3,10 @@
 
 package style
 
+func Enquote(t string) string {
+	return "«" + t + "»"
+}
+
 func Bold(t string) string {
 	return "<b>" + t + "</b>"
 }

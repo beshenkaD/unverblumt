@@ -1,3 +1,4 @@
+# Builtin
 msgid "check if bot is active"
 msgstr ""
 
@@ -10,6 +11,7 @@ msgstr ""
 msgid "show usage for given command name"
 msgstr ""
 
+# Me
 msgid "command from IRC"
 msgstr ""
 
@@ -19,9 +21,20 @@ msgstr ""
 msgid "the action you want to perform"
 msgstr ""
 
+# Random
 msgid "find out when the event will happen"
 msgstr ""
 
+msgid "magic ball will help you make the right decision"
+msgstr ""
+
+msgid "question"
+msgstr ""
+
+msgid "what you want to ask the magic ball" 
+msgstr ""
+
+# Text
 msgid "string"
 msgstr ""
 

@@ -1,8 +1,78 @@
+# Builtin
 msgid "pong"
 msgstr ""
 
+# Me
 msgid "please provide an action"
 msgstr ""
 
+# Text
 msgid "please provide string to flip"
+msgstr ""
+
+# Random
+msgid "shaking the magic ball"
+msgstr ""
+
+msgid "magic ball said: "
+msgstr ""
+
+msgid "It is certain"
+msgstr ""
+
+msgid "It is decidedly so"
+msgstr ""
+
+msgid "Without a doubt"
+msgstr ""
+
+msgid "Yes — definitely"
+msgstr ""
+
+msgid "You may rely on it"
+msgstr ""
+
+msgid "As I see it, yes"
+msgstr ""
+
+msgid "Most likely"
+msgstr ""
+
+msgid "Outlook good"
+msgstr ""
+
+msgid "Signs point to yes"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Reply hazy, try again"
+msgstr ""
+
+msgid "Ask again later"
+msgstr ""
+
+msgid "Better not tell you now"
+msgstr ""
+
+msgid "Cannot predict now"
+msgstr ""
+
+msgid "Concentrate and ask again"
+msgstr ""
+
+msgid "Don’t count on it"
+msgstr ""
+
+msgid "My reply is no"
+msgstr ""
+
+msgid "My sources say no"
+msgstr ""
+
+msgid "Outlook not so good"
+msgstr ""
+
+msgid "Very doubtful"
 msgstr ""
