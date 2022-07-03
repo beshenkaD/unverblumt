@@ -88,3 +88,10 @@ msgstr ""
 
 msgid "Very doubtful"
 msgstr ""
+
+# Image
+msgid "please provide keywords for search"
+msgstr ""
+
+msgid "no images found for the given keywords"
+msgstr ""

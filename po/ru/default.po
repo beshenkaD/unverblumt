@@ -88,3 +88,10 @@ msgstr "Перспективы не очень хорошие"
 
 msgid "Very doubtful"
 msgstr "Очень сомнительно"
+
+# Image
+msgid "please provide keywords for search"
+msgstr "укажите ключевые слова для поиска"
+
+msgid "no images found for the given keywords"
+msgstr "не найдено картинок по данным ключевым словам"

@@ -46,3 +46,13 @@ msgstr ""
 
 msgid "flips string upside-down"
 msgstr ""
+
+# Image
+msgid "search for an image on the internet"
+msgstr ""
+
+msgid "keywords"
+msgstr ""
+
+msgid "search keywords"
+msgstr ""

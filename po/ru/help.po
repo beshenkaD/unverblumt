@@ -46,3 +46,13 @@ msgstr "строка которую бот перевернет"
 
 msgid "flips string upside-down"
 msgstr "переворачивает строку вверх ногами"
+
+# Image
+msgid "search for an image on the internet"
+msgstr "ищет картинку в интернете"
+
+msgid "keywords"
+msgstr "ключевые слова"
+
+msgid "search keywords"
+msgstr "ключевые слова для поиска"

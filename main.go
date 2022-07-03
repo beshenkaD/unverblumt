@@ -4,6 +4,7 @@
 package main
 
 import (
+	"github.com/beshenkaD/unverblumt/modules/image"
 	"github.com/beshenkaD/unverblumt/modules/me"
 	"github.com/beshenkaD/unverblumt/modules/random"
 	"github.com/beshenkaD/unverblumt/modules/text"
@@ -16,5 +17,6 @@ func main() {
 		&me.Me{},
 		&random.Random{},
 		&text.Text{},
+		&image.Image{},
 	)
 }
