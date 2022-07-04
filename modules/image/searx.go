@@ -19,6 +19,8 @@ func searxImages(keywords string, safe bool) (r []string, e error) {
 	reqURL := URL + "?q=" + url.QueryEscape(keywords) + "&format=json&categories=images"
 	if safe {
 		reqURL += "&safesearch=1"
+	} else {
+		reqURL += "&safesearch=0"
 	}
 
 	req, _ := http.NewRequest("GET", reqURL, nil)

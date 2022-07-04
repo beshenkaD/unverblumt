@@ -34,15 +34,27 @@ func (m *Image) Commands() []*u.Command {
 			},
 			Handler: image,
 		},
+		{
+			Cmd:  "/image_unsafe",
+			Desc: "like /image but without safe search option",
+			Args: []u.Arg{
+				{
+					Name:     "keywords",
+					Desc:     "search keywords",
+					Required: true,
+				},
+			},
+			Handler: imageUnsafe,
+		},
 	}
 }
 
-func image(c telebot.Context) error {
+func _image(c telebot.Context, safe bool) error {
 	if len(c.Args()) == 0 {
 		return c.Reply(i18n.TC(c, "please provide keywords for search"))
 	}
 
-	imgs, err := searxImages(strings.Join(c.Args(), " "), true)
+	imgs, err := searxImages(strings.Join(c.Args(), " "), safe)
 	if err != nil {
 		return err
 	}
@@ -63,4 +75,12 @@ func image(c telebot.Context) error {
 
 		return nil
 	}
+}
+
+func image(c telebot.Context) error {
+	return _image(c, true)
+}
+
+func imageUnsafe(c telebot.Context) error {
+	return _image(c, false)
 }
