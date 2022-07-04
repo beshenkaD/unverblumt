@@ -8,6 +8,10 @@ import (
 	"gopkg.in/telebot.v3"
 )
 
+func loadMiddlewares() {
+	ignoreFwdCommands()
+}
+
 func loadBuiltins() {
 	ping()
 	help()
@@ -58,5 +62,17 @@ func start() {
 			}
 			return nil
 		},
+	})
+}
+
+func ignoreFwdCommands() {
+	Get().Bot.Use(func(next telebot.HandlerFunc) telebot.HandlerFunc {
+		return func(c telebot.Context) error {
+			if msg := c.Message(); msg != nil && msg.IsForwarded() {
+				return nil
+			}
+
+			return next(c)
+		}
 	})
 }

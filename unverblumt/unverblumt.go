@@ -56,6 +56,7 @@ func Run(m ...Module) {
 	}
 	Get().commands = make(map[string]*Command)
 
+	loadMiddlewares()
 	loadBuiltins()
 	loadModules(m)
 	Get().setCommands()
