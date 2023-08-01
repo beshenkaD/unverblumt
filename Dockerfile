@@ -1,13 +1,24 @@
-FROM golang:1.18-alpine
+##
+## Build
+##
 
-RUN apk add build-base
+FROM golang:1.19-alpine AS build
 
-WORKDIR $GOPATH/src/github.com/beshenkaD/unverblumt
+WORKDIR /src
 
-COPY . .
+COPY . ./
 
-RUN go mod download
+RUN go build -o ./bin/bot ./
 
-RUN go build -o bot
 
-CMD ./bot
+##
+## Deploy
+##
+
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=build /src/bin/bot ./
+
+ENTRYPOINT [ "./bot" ]
